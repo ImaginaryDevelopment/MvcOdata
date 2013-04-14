@@ -5,11 +5,8 @@
 
 	public class Config : IConfig
 	{
-		IDictionary<string, string> defaults = new Dictionary<string, string> { { "DefaultServiceRootUri", "http://localhost:4339/" }, };
-		public Config()
-		{
+		readonly IDictionary<string, string> defaults = new Dictionary<string, string> { { "DefaultServiceRootUri", "http://localhost:4339/" }, };
 
-		}
 		public bool AppSettingExists(string key)
 		{
 			return this.defaults.ContainsKey(key);

@@ -68,7 +68,7 @@ namespace OData.App_Start
 					kernel.Bind(typeof(IDataServiceContextFactory<>))
 								 .To(typeof(DataServiceContextFactory<>))
 								 .WithConstructorArgument("uri", new Uri("http://localhost:4339/starfleetcommander.svc"));
-					kernel.Bind<IStartfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStartfleetCommander>>().GetContext(config));
+					kernel.Bind<IStarfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStarfleetCommander>>().GetContext(config));
         }        
     }
 }

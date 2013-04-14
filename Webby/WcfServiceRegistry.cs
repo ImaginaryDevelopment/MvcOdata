@@ -13,10 +13,12 @@ namespace Webby
 	public static class WcfServiceRegistry
 	{
 		private static readonly IDictionary<string, Type> TypeMap = new ConcurrentDictionary<string, Type>(StringComparer.InvariantCultureIgnoreCase);
+
 		public static bool IsDataService(this Type type)
 		{
 			return type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.Name.StartsWith("WcfDataService");
 		}
+
 		public static void ScanAssemblies()
 		{
 			TypeMap.Clear();
@@ -24,7 +26,7 @@ namespace Webby
 			try
 			{
 				var assemblies = from a in AppDomain.CurrentDomain.GetAssemblies()
-												 where a.FullName.ToUpper().Contains("WcfData") //|| a.FullName.ToUpper().Contains("CompanyName")
+												 where a.FullName.ToUpper().Contains("WcfData".ToUpper()) //|| a.FullName.ToUpper().Contains("CompanyName")
 												 select a;
 
 				// get all public types
@@ -51,9 +53,14 @@ namespace Webby
 					TypeMap.Add(sci.Name,sci);
 				}
 				// NOTE: Could blow up if there are more than one implementing type with the same class name.
-				serviceContractImplementations.ForEach(x => TypeMap.Add(x.Name, x));
+				//serviceContractImplementations.ForEach(x => TypeMap.Add(x.Name, x));
 
 				wcfDataServices.ForEach(x => TypeMap.Add(x.Name, x));
+				if (TypeMap.Count < 1 || TypeMap.ContainsKey("StarfleetCommander")==false)
+				{
+					System.Diagnostics.Debugger.Launch();	
+				}
+				
 			}
 			catch (ReflectionTypeLoadException e)
 			{

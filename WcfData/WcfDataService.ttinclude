@@ -7,10 +7,19 @@
 <#@ include file="EnvDteHelper.ttinclude" #><#+
 void GenerateWcfService(string clsName,DTE dte)
 { 
-    var iName= "I"+clsName;
+	
+    var iName= "I"+clsName.Replace("Service",string.Empty);
+
     var cs= iName+".cs";
+	
     var iFile=dte.Solution.FindProjectItem(cs);
+	if(iFile==null){
+	WriteLine("//failed to find "+ cs);
+	return;
+	}
     var iCode=iFile.FileCodeModel;
+  if(iCode==null)
+	return;
     var ns=iCode.CodeElements.Cast<CodeElement>().First(ce=>ce.Kind== vsCMElement.vsCMElementNamespace);
     var cls=ns.Children.Cast<CodeElement>().First(ce=>ce.Kind==vsCMElement.vsCMElementInterface);
     var props= cls.Children.Cast<CodeProperty>();
@@ -22,8 +31,8 @@ using System.Data.Services.Common;
 using Microsoft.Practices.ServiceLocation;
 
 using Contracts;
-
-namespace PaySpan.Payer.WebService
+using Webby;
+namespace WcfData
 {
     [System.ServiceModel.ServiceBehavior(IncludeExceptionDetailInFaults = true)]
     public class <#=clsName#> : WcfDataService<<#=iName#>>

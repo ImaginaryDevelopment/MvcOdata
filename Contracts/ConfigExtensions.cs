@@ -1,8 +1,6 @@
-﻿namespace Webby
+﻿namespace Contracts
 {
 	using System.ComponentModel;
-
-	using Contracts;
 
 	public static class ConfigExtensions
 	{

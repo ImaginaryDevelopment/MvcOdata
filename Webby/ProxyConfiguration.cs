@@ -148,7 +148,7 @@
 
 			var type = WcfServiceRegistry.GetType(this.EndpointConfigurationName);
 
-			return type == null ? string.Format("{0}.{0}, {0}", this.EndpointConfigurationName) : type.AssemblyQualifiedName;
+			return type == null ? string.Format("WcfData.{0}, WcfData", this.EndpointConfigurationName) : type.AssemblyQualifiedName;
 		}
 
 		public static ProxyConfiguration Create(IConfig config, string serviceName, string instance = null)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Contracts
 {
-	public interface IStartfleetCommander
+	public interface IStarfleetCommander
 	{
 		IQueryable<Universe> Universes { get; }
 		

@@ -25,7 +25,7 @@ namespace OData.Controllers.OData
     /// SearchModel:<see cref="Models.UniverseSearchModel"/>
     /// SearchForm:<see cref="Models.UniverseSearchForm"/>
     /// OData Controller: <see cref="OData.Controllers.OData.UniversesController"/>
-    /// OData Contract:<see cref="Contracts.IStartfleetCommander"/>
+    /// OData Contract:<see cref="IStartfleetCommander"/>
     /// OData Model:<see cref="Contracts.Universe"/>
     /// JIRA: <see href="http://jira/browse/DEV-775"/>
 	/// Odata: <see href="http://localhost:4339/webby/OData/Universes?$top=10&$inlinecount=allpages"/>
@@ -36,11 +36,11 @@ namespace OData.Controllers.OData
     /// </summary>
     public class UniversesController : ODataController
     {
-        private readonly Contracts.IStartfleetCommander _startfleetCommander;
+        private readonly Contracts.IStarfleetCommander _startfleetCommander;
 
-        public UniversesController(Contracts.IStartfleetCommander startfleetCommander)
+        public UniversesController(Contracts.IStarfleetCommander startfleetCommander)
         {
-            _startfleetCommander = startfleetCommander;
+            this._startfleetCommander = startfleetCommander;
         }
 
         public static Func<Expression<Func<Contracts.Universe, object>>, string> PropertyNameHelper

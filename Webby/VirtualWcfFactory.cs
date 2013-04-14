@@ -14,6 +14,7 @@
 	{
 		private static readonly IDictionary<string, Type> TypeMap = new Dictionary<string, Type>(StringComparer.InvariantCultureIgnoreCase);
 
+		static bool initialized = false;
 		private static readonly object Lock = new object();
 
 		private static Type GetType(string typeString)
@@ -24,13 +25,33 @@
 			{
 				return serviceType;
 			}
-
+			
 			lock (Lock)
 			{
+				if (!initialized)
+				{
+					initialized = true;
+					
+				}
 				if (!TypeMap.ContainsKey(typeString))
 				{
-					System.Diagnostics.Debugger.Break();
-					serviceType = Type.GetType(typeString, true, true);
+					
+					try
+					{
+						serviceType = Type.GetType(typeString, true, true);
+					}
+					catch (System.IO.FileNotFoundException fileNotFoundException)
+					{
+						System.Diagnostics.Debugger.Launch();
+						throw;
+
+					}
+					catch (TypeLoadException typeLoadException)
+					{
+						System.Diagnostics.Debugger.Launch();
+						throw;
+					}
+					
 
 					TypeMap.Add(typeString, serviceType);
 				}
@@ -47,7 +68,7 @@
 		{
 			var proxyConfig = ProxyConfiguration.Create(new Config(), iface.Name.Substring(1));
 
-			//host.Authorization.ServiceAuthorizationManager = new PaySpanServiceAuthorizationManager();
+			//host.Authorization.ServiceAuthorizationManager = new CompanyNameServiceAuthorizationManager();
 
 			var ep = host.AddServiceEndpoint(iface, new BindingFactory().CreateBinding(proxyConfig), string.Empty);
 

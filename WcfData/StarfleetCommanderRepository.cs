@@ -7,7 +7,7 @@ namespace WcfData
 {
 	using Contracts;
 
-	public class StarfleetCommanderRepository : IStartfleetCommander
+	public class StarfleetCommanderRepository : IStarfleetCommander
 	{
 		readonly Func<MaslowJax_dbsEntities> _dbFactory;
 

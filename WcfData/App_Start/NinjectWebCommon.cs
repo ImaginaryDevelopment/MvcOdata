@@ -6,12 +6,13 @@ namespace WcfData.App_Start
 	using System;
 	using System.Web;
 
+	using Microsoft.Practices.ServiceLocation;
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
 
-
+	using Webby;
 
 	public static class NinjectWebCommon 
     {
@@ -56,6 +57,7 @@ namespace WcfData.App_Start
         private static void RegisterServices(IKernel kernel)
         {
 					kernel.Bind(typeof(Webby.IWcfProxyFactory<>)).To(typeof(Webby.WcfProxyFactory<>));
+	        ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(kernel));
         }        
     }
 }

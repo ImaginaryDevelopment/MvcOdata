@@ -16,6 +16,7 @@ namespace WcfData
 			var provider = new WcfVirtualPathProvider();
 			HostingEnvironment.RegisterVirtualPathProvider(provider);
 			WcfServiceRegistry.ScanAssemblies();
+			System.Diagnostics.Debugger.Launch();
 		}
 	}
 }
