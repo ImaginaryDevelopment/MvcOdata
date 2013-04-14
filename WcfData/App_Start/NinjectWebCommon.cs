@@ -6,6 +6,8 @@ namespace WcfData.App_Start
 	using System;
 	using System.Web;
 
+	using Contracts;
+
 	using Microsoft.Practices.ServiceLocation;
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
@@ -57,6 +59,8 @@ namespace WcfData.App_Start
         private static void RegisterServices(IKernel kernel)
         {
 					kernel.Bind(typeof(Webby.IWcfProxyFactory<>)).To(typeof(Webby.WcfProxyFactory<>));
+	        kernel.Bind<IStarfleetCommander>().To<StarfleetCommanderRepository>();
+	        kernel.Bind<Func<MaslowJax_dbsEntities>>().ToMethod(ctx => () => new MaslowJax_dbsEntities("imaginarydevelopment"));
 	        ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(kernel));
         }        
     }

@@ -12,9 +12,10 @@ using System.Web.Http;
 using System.Web.Http.OData;
 using Contracts;
 <# var toGenerate = new [] {
-        new OdataGenerator(null,"Contracts.Universe","Contracts.IStartfleetCommander","775",itemlocator:"Enumerable.Empty<Universe>().AsQueryable()"), //B 874
+        new OdataGenerator(null,"Contracts.Universe","Contracts.IStarfleetCommander") //,"775",itemlocator:"Enumerable.Empty<Universe>().AsQueryable()"), //B 874
        
     }; 
+   var serviceBase="http://localhost:4339/";
 #>
 namespace OdataGenerator
 {
@@ -52,11 +53,11 @@ namespace <#=ns#>
     /// OData Model:<see cref="<#=n.Name#>"/>
 <#if (string.IsNullOrEmpty(n.Ticket)==false) {#>
     /// JIRA: <see href="http://jira/browse/DEV-<#=n.Ticket#>"/>
-<#}#>	/// Odata: <see href="http://localhost:4339/webby/OData/<#=className#>s?$top=10&$inlinecount=allpages"/>
-    /// Svc: <see href="http://localhost:4339/<#=service #>.svc/"/>
-    /// Svc JSON: <see href="http://localhost/webby/<#=service #>.svc?$format=json"/>
-    /// Svc Model: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s"/>
-    /// Svc Model JSON: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s?$format=json"/>
+<#}#>	/// Odata: <see href="<#=serviceBase#>OData/<#=className#>s?$top=10&$inlinecount=allpages"/>
+    /// Svc: <see href="<#=serviceBase#><#=service #>.svc/"/>
+    /// Svc JSON: <see href="<#=serviceBase#><#=service #>.svc?$format=json"/>
+    /// Svc Model: <see href="<#=serviceBase#><#=service #>.svc/<#=className#>s"/>
+    /// Svc Model JSON: <see href="<#=serviceBase#><#=service #>.svc/<#=className#>s?$format=json"/>
     /// </summary>
     public class <#=className#>sController : ODataController
     {

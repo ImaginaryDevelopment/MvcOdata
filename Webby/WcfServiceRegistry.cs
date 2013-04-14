@@ -56,7 +56,7 @@ namespace Webby
 				//serviceContractImplementations.ForEach(x => TypeMap.Add(x.Name, x));
 
 				wcfDataServices.ForEach(x => TypeMap.Add(x.Name, x));
-				if (TypeMap.Count < 1 || TypeMap.ContainsKey("StarfleetCommander")==false)
+				if (TypeMap.Count < 1 || TypeMap.ContainsKey("StarfleetCommanderService")==false)
 				{
 					System.Diagnostics.Debugger.Launch();	
 				}

@@ -25,22 +25,21 @@ namespace OData.Controllers.OData
     /// SearchModel:<see cref="Models.UniverseSearchModel"/>
     /// SearchForm:<see cref="Models.UniverseSearchForm"/>
     /// OData Controller: <see cref="OData.Controllers.OData.UniversesController"/>
-    /// OData Contract:<see cref="IStartfleetCommander"/>
+    /// OData Contract:<see cref="Contracts.IStarfleetCommander"/>
     /// OData Model:<see cref="Contracts.Universe"/>
-    /// JIRA: <see href="http://jira/browse/DEV-775"/>
-	/// Odata: <see href="http://localhost:4339/webby/OData/Universes?$top=10&$inlinecount=allpages"/>
-    /// Svc: <see href="http://localhost:4339/StartfleetCommander.svc/"/>
-    /// Svc JSON: <see href="http://localhost/webby/StartfleetCommander.svc?$format=json"/>
-    /// Svc Model: <see href="http://localhost/webby/StartfleetCommander.svc/Universes"/>
-    /// Svc Model JSON: <see href="http://localhost/webby/StartfleetCommander.svc/Universes?$format=json"/>
+	/// Odata: <see href="http://localhost:4339/OData/Universes?$top=10&$inlinecount=allpages"/>
+    /// Svc: <see href="http://localhost:4339/StarfleetCommander.svc/"/>
+    /// Svc JSON: <see href="http://localhost:4339/StarfleetCommander.svc?$format=json"/>
+    /// Svc Model: <see href="http://localhost:4339/StarfleetCommander.svc/Universes"/>
+    /// Svc Model JSON: <see href="http://localhost:4339/StarfleetCommander.svc/Universes?$format=json"/>
     /// </summary>
     public class UniversesController : ODataController
     {
-        private readonly Contracts.IStarfleetCommander _startfleetCommander;
+        private readonly Contracts.IStarfleetCommander _starfleetCommander;
 
-        public UniversesController(Contracts.IStarfleetCommander startfleetCommander)
+        public UniversesController(Contracts.IStarfleetCommander starfleetCommander)
         {
-            this._startfleetCommander = startfleetCommander;
+            _starfleetCommander = starfleetCommander;
         }
 
         public static Func<Expression<Func<Contracts.Universe, object>>, string> PropertyNameHelper
@@ -64,12 +63,7 @@ namespace OData.Controllers.OData
         [Queryable]
         public IQueryable<Contracts.Universe> Get()
         {
-            // TODO: DEV-865 wire up back end to front
-            // TODO: DEV-775 wiring
- 
-            return Enumerable.Empty<Universe>().AsQueryable();
-
-            // return startfleetCommander.Universes;
+            return _starfleetCommander.Universes;
         }
     }
 }

@@ -67,7 +67,7 @@ namespace OData.App_Start
 					kernel.Bind(typeof(IWcfProxyFactory<>)).To(typeof(WcfProxyFactory<>));
 					kernel.Bind(typeof(IDataServiceContextFactory<>))
 								 .To(typeof(DataServiceContextFactory<>))
-								 .WithConstructorArgument("uri", new Uri("http://localhost:4339/starfleetcommander.svc"));
+								 .WithConstructorArgument("uri", new Uri(string.Format(config.ReadAppSetting("DefaultServiceRootUri"),"StarfleetCommanderService.svc/")));
 					kernel.Bind<IStarfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStarfleetCommander>>().GetContext(config));
         }        
     }

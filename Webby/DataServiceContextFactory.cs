@@ -65,7 +65,7 @@
 
 		internal static TType GetContext<TType>(IConfig config, string instance = null) where TType : class
 		{
-			var proxyConfig = ProxyConfiguration.Create(config, typeof(TType).Name.Substring(1), instance);
+			var proxyConfig = ProxyConfiguration.Create(config, typeof(TType).Name.Substring(1)+"Service", instance);
 
 			if (proxyConfig == null)
 			{
