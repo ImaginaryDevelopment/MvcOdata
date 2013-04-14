@@ -1,0 +1,152 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(ProjectDir)..\packages\Inflector.1.0.0.0\lib\net45\Inflector.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web.Http;
+using System.Web.Http.OData;
+using Contracts;
+<# var toGenerate = new [] {
+        new OdataGenerator(null,"Contracts.Universe","Contracts.IStartfleetCommander","775",itemlocator:"Enumerable.Empty<Universe>().AsQueryable()"), //B 874
+       
+    }; 
+#>
+namespace OdataGenerator
+{
+    using System.Web.Http.OData.Builder;
+    
+    public static class ODataConventionModelBuilderEnabler
+    {
+        public static void WireModels(ODataConventionModelBuilder mb)
+        {
+<#foreach(var og in toGenerate){#>
+            mb.EntitySet<<#=og.Name#>>("<#=GetClassOnly(og.Name)#>s");
+<#}#>
+        }
+    }
+}
+
+<# foreach(var n in toGenerate){ 
+var odata= GetClassOnly(n.Name)+"s"; 
+var className= GetClassOnly(n.Name);
+var controllerns="OData."+n.Area+"Controllers";
+var ns= controllerns+".OData";
+var payerIndex=className.IndexOf("payer",StringComparison.InvariantCultureIgnoreCase);
+var noPayer= payerIndex==0? className.Substring(payerIndex+"payer".Length): className;
+var service= Inflector.Inflector.Pascalize( GetClassVariable(n.Contract));
+#>
+// ReSharper disable RedundantNameQualifier
+namespace <#=ns#>
+{
+    /// <summary>
+    /// Controller:<see cref="<#=controllerns#>.<#=n.Controller ?? noPayer#>Controller" />
+    /// SearchModel:<see cref="<#=n.Area#>Models.<#=className#>SearchModel"/>
+    /// SearchForm:<see cref="<#=n.Area#>Models.<#=className#>SearchForm"/>
+    /// OData Controller: <see cref="<#=ns+"."+className#>sController"/>
+    /// OData Contract:<see cref="<#=n.Contract#>"/>
+    /// OData Model:<see cref="<#=n.Name#>"/>
+<#if (string.IsNullOrEmpty(n.Ticket)==false) {#>
+    /// JIRA: <see href="http://jira/browse/DEV-<#=n.Ticket#>"/>
+<#}#>	/// Odata: <see href="http://localhost/webby/OData/<#=className#>s?$top=10&$inlinecount=allpages"/>
+    /// Svc: <see href="http://localhost/webby/<#=service #>.svc/"/>
+    /// Svc JSON: <see href="http://localhost/webby/<#=service #>.svc?$format=json"/>
+    /// Svc Model: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s"/>
+    /// Svc Model JSON: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s?$format=json"/>
+    /// </summary>
+    public class <#=className#>sController : ODataController
+    {
+        private readonly <#=n.Contract#> _<#=GetClassVariable(n.Contract)#>;
+
+        public <#=GetClassOnly(n.Name)#>sController(<#=n.Contract#> <#=GetClassVariable(n.Contract)#>)
+        {
+            _<#=GetClassVariable(n.Contract)#> = <#=GetClassVariable(n.Contract)#>;
+        }
+
+        public static Func<Expression<Func<<#=n.Name#>, object>>, string> PropertyNameHelper
+        {
+            get
+            {
+                return LinqOp.PropertyNameHelper<<#=n.Name#>>();
+            }
+        }
+
+        public const string OdataSegment = "<#=odata#>";
+
+        public static Type ModelType
+        {
+            get
+            {
+                return typeof(<#=n.Name#>);
+            }
+        }
+
+        [Queryable]
+        public IQueryable<<#=n.Name#>> Get()
+        {
+<# if(n.Ticket!=null){ #>
+            // TODO: DEV-865 wire up back end to front
+            // TODO: DEV-<#=n.Ticket#> wiring
+<# if(string.IsNullOrEmpty( n.ItemLocator)){ #>
+            return Enumerable.Empty<<#=n.Name#>>().AsQueryable();
+<# } else { #> 
+            return <#=n.ItemLocator#>;
+<# } #>
+
+            // return <#=GetClassVariable(n.Contract)#>.<#=GetClassOnly(n.Name)#>s;
+<# } else { #>
+            return _<#=GetClassVariable(n.Contract)#>.<#=GetClassOnly(n.Name)#>s;
+<# } #>
+        }
+    }
+}
+// ReSharper restore RedundantNameQualifier
+
+<# } #>
+
+<#+
+    string GetClassVariable(string fullyQualified){
+        var result=GetClassOnly(fullyQualified);
+        if(result.StartsWith("I"))
+        result= result.Substring(1);
+        if(result[0]==result.ToUpper()[0])
+            result=result.ToLower()[0]+result.Substring(1);
+        return result;
+    }
+    string GetClassOnly(string fullyQualified){
+        if (fullyQualified.Contains('<'))
+            fullyQualified = fullyQualified.Substring(0, fullyQualified.LastIndexOf("<"));
+        var result = fullyQualified.Substring(fullyQualified.LastIndexOf(".") + 1);
+        
+        return result;
+    }
+    internal partial class OdataGenerator{
+        public string Area{get;private set;}
+        public string Name{get;private set;}
+        public string Contract{get;private set;}
+        public string Ticket{get; private set;}
+        public string ItemLocator{get;private set;}
+        public string Controller{get; private set;}
+        public OdataGenerator(string area, string name, string contract,string ticket=null,string itemlocator=null,string controller=null){
+            if(string.IsNullOrEmpty(area)){
+            Area=string.Empty;
+            } else {
+                area="Areas."+area;
+                if(area.EndsWith(".")){
+                    Area=area;
+                } else {
+                    Area=area+".";
+                }
+            }
+            Name=name;
+            Contract=contract;
+            Ticket=ticket;
+            ItemLocator=itemlocator;
+            Controller=controller;
+        }
+    }
+#>

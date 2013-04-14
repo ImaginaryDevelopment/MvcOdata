@@ -2,3 +2,5 @@
 *.dll
 obj/
 *.user
+packages/
+bin/
