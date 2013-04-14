@@ -52,8 +52,8 @@ namespace <#=ns#>
     /// OData Model:<see cref="<#=n.Name#>"/>
 <#if (string.IsNullOrEmpty(n.Ticket)==false) {#>
     /// JIRA: <see href="http://jira/browse/DEV-<#=n.Ticket#>"/>
-<#}#>	/// Odata: <see href="http://localhost/webby/OData/<#=className#>s?$top=10&$inlinecount=allpages"/>
-    /// Svc: <see href="http://localhost/webby/<#=service #>.svc/"/>
+<#}#>	/// Odata: <see href="http://localhost:4339/webby/OData/<#=className#>s?$top=10&$inlinecount=allpages"/>
+    /// Svc: <see href="http://localhost:4339/<#=service #>.svc/"/>
     /// Svc JSON: <see href="http://localhost/webby/<#=service #>.svc?$format=json"/>
     /// Svc Model: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s"/>
     /// Svc Model JSON: <see href="http://localhost/webby/<#=service #>.svc/<#=className#>s?$format=json"/>

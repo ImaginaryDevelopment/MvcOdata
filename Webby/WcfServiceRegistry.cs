@@ -6,6 +6,7 @@ using System.Text;
 namespace Webby
 {
 	using System.Collections.Concurrent;
+	using System.Diagnostics;
 	using System.Reflection;
 	using System.ServiceModel;
 
@@ -23,7 +24,7 @@ namespace Webby
 			try
 			{
 				var assemblies = from a in AppDomain.CurrentDomain.GetAssemblies()
-												 //where a.FullName.ToUpper().Contains("companyname") || a.FullName.ToUpper().Contains("companyname")
+												 where a.FullName.ToUpper().Contains("WcfData") //|| a.FullName.ToUpper().Contains("CompanyName")
 												 select a;
 
 				// get all public types
@@ -41,7 +42,14 @@ namespace Webby
 																							select t).Distinct().ToList();
 
 				var wcfDataServices = (from t in types.Where(x => x.IsDataService()) select t).Distinct().ToList();
-
+				foreach (var sci in serviceContractImplementations)
+				{
+					if (TypeMap.ContainsKey(sci.Name))
+					{
+						System.Diagnostics.Debugger.Break();
+					}
+					TypeMap.Add(sci.Name,sci);
+				}
 				// NOTE: Could blow up if there are more than one implementing type with the same class name.
 				serviceContractImplementations.ForEach(x => TypeMap.Add(x.Name, x));
 

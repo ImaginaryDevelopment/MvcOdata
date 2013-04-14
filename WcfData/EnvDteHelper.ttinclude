@@ -1,0 +1,49 @@
+﻿<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+var hostServiceProvider = (IServiceProvider)Host;
+Dte = (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+if(Dte == null) {
+            throw new Exception("T4Generator can only execute through the Visual Studio host");
+}#>
+<#+
+Project GetProjectContainingT4File(DTE dte,bool keepDirty) {
+
+    // Find the .tt file's ProjectItem
+    ProjectItem projectItem = dte.Solution.FindProjectItem(Host.TemplateFile);
+
+    // If the .tt file is not opened, open it
+    if (projectItem.Document == null)
+        projectItem.Open(Constants.vsViewKindCode);
+
+    if (keepDirty) {
+        // Mark the .tt file as unsaved. This way it will be saved and update itself next time the
+        // project is built. Basically, it keeps marking itself as unsaved to make the next build work.
+        // Note: this is certainly hacky, but is the best I could come up with so far.
+        projectItem.Document.Saved = false;
+    }
+
+    return projectItem.ContainingProject;
+}
+
+#>
+<#+ 
+	IEnumerable<T> Descendants<T>(IEnumerable<T> source,Func<T, IEnumerable<T>> descendBy)
+	{
+		foreach(T value in source)
+		{
+			yield return value;
+			foreach(T child in Descendants(descendBy(value),descendBy))
+			{
+				yield return child;
+			}
+		}
+	}
+
+IEnumerable<ProjectItem> RecurseProjectItems(Project proj)
+{
+return Descendants(proj.ProjectItems.Cast<ProjectItem>(),pi=>pi.ProjectItems.Cast<ProjectItem>());
+}
+#>

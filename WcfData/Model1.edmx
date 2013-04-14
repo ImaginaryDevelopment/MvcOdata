@@ -1,0 +1,1138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MaslowJax_dbsModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="MaslowJax_dbsModelStoreContainer">
+          <EntitySet Name="Alliance" EntityType="MaslowJax_dbsModel.Store.Alliance" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AllianceCandidate" EntityType="MaslowJax_dbsModel.Store.AllianceCandidate" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="CombatUnit" EntityType="MaslowJax_dbsModel.Store.CombatUnit" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Espionage" EntityType="MaslowJax_dbsModel.Store.Espionage" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EspionageAccess" EntityType="MaslowJax_dbsModel.Store.EspionageAccess" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EspionageBuilding" EntityType="MaslowJax_dbsModel.Store.EspionageBuilding" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EspionageReport" EntityType="MaslowJax_dbsModel.Store.EspionageReport" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="EspionageT" EntityType="MaslowJax_dbsModel.Store.EspionageT" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ExplorerUser" EntityType="MaslowJax_dbsModel.Store.ExplorerUser" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ExplorerUser_Alliance" EntityType="MaslowJax_dbsModel.Store.ExplorerUser_Alliance" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ExplorerUser_Player" EntityType="MaslowJax_dbsModel.Store.ExplorerUser_Player" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="GameSystem" EntityType="MaslowJax_dbsModel.Store.GameSystem" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="OpenId" EntityType="MaslowJax_dbsModel.Store.OpenId" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Permission" EntityType="MaslowJax_dbsModel.Store.Permission" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Player" EntityType="MaslowJax_dbsModel.Store.Player" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PlayerComment" EntityType="MaslowJax_dbsModel.Store.PlayerComment" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PlayerHistory" EntityType="MaslowJax_dbsModel.Store.PlayerHistory" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Position" EntityType="MaslowJax_dbsModel.Store.Position" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PositionSnapshot" EntityType="MaslowJax_dbsModel.Store.PositionSnapshot" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Registration" EntityType="MaslowJax_dbsModel.Store.Registration" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ReportShip" EntityType="MaslowJax_dbsModel.Store.ReportShip" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="SnapshotAccess" EntityType="MaslowJax_dbsModel.Store.SnapshotAccess" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="System" EntityType="MaslowJax_dbsModel.Store.System" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Universe" EntityType="MaslowJax_dbsModel.Store.Universe" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="UserAlliance" EntityType="MaslowJax_dbsModel.Store.UserAlliance" store:Type="Tables" Schema="Sfc" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <AssociationSet Name="FK__Espionage__Build__251C81ED" Association="MaslowJax_dbsModel.Store.FK__Espionage__Build__251C81ED">
+            <End Role="EspionageBuilding" EntitySet="EspionageBuilding" />
+            <End Role="Espionage" EntitySet="Espionage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alliance_Universe" Association="MaslowJax_dbsModel.Store.FK_Alliance_Universe">
+            <End Role="Universe" EntitySet="Universe" />
+            <End Role="Alliance" EntitySet="Alliance" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Alliance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Shortname" Type="nvarchar" Nullable="false" MaxLength="8" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="UniverseId" Type="tinyint" />
+          <Property Name="IsExtreme" Type="bit" />
+          <Property Name="Added" Type="smalldatetime" />
+          <Property Name="Updated" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="AllianceCandidate">
+          <Key>
+            <PropertyRef Name="UserGuid" />
+            <PropertyRef Name="AllianceId" />
+          </Key>
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AllianceId" Type="int" Nullable="false" />
+          <Property Name="Applicant" Type="bit" Nullable="false" />
+          <Property Name="Invite" Type="bit" Nullable="false" />
+          <Property Name="UniverseId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="CombatUnit">
+          <Key>
+            <PropertyRef Name="CombatUnitId" />
+          </Key>
+          <Property Name="CombatUnitId" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="40" />
+          <Property Name="BattleCalcField" Type="tinyint" Nullable="false" />
+          <Property Name="MakesDebris" Type="bit" Nullable="false" />
+          <Property Name="BaseSpeed" Type="int" Nullable="false" />
+          <Property Name="BaseSpeed2" Type="smallint" />
+          <Property Name="Ore" Type="int" Nullable="false" />
+          <Property Name="Crystal" Type="int" Nullable="false" />
+          <Property Name="Hydrogen" Type="int" Nullable="false" />
+          <Property Name="BaseAttack" Type="int" Nullable="false" />
+          <Property Name="BaseShield" Type="int" Nullable="false" />
+          <Property Name="BaseHull" Type="int" Nullable="false" />
+          <Property Name="CargoCapacity" Type="int" Nullable="false" />
+          <Property Name="FuelConsumption" Type="int" Nullable="false" />
+          <Property Name="FuelConsumption2" Type="int" />
+        </EntityType>
+        <EntityType Name="Espionage">
+          <Key>
+            <PropertyRef Name="EspionageId" />
+          </Key>
+          <Property Name="EspionageId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShipYard" Type="tinyint" />
+          <Property Name="Capitol" Type="tinyint" />
+          <Property Name="ResearchLab" Type="tinyint" />
+          <Property Name="MissileSilo" Type="tinyint" />
+          <Property Name="Factory" Type="tinyint" />
+          <Property Name="OreWarehouse" Type="tinyint" />
+          <Property Name="CrystalWarehouse" Type="tinyint" />
+          <Property Name="HydrogenStorage" Type="tinyint" />
+          <Property Name="Foundry" Type="tinyint" />
+          <Property Name="OreMine" Type="tinyint" />
+          <Property Name="CrystalMine" Type="tinyint" />
+          <Property Name="HydrogenSynthesizer" Type="tinyint" />
+          <Property Name="LaserTech" Type="tinyint" />
+          <Property Name="ArmorTech" Type="tinyint" />
+          <Property Name="WeaponsTech" Type="tinyint" />
+          <Property Name="ShieldTech" Type="tinyint" />
+          <Property Name="ParticleTech" Type="tinyint" />
+          <Property Name="JetDrive" Type="tinyint" />
+          <Property Name="AiTech" Type="tinyint" />
+          <Property Name="EnergyTech" Type="tinyint" />
+          <Property Name="EspionageTech" Type="tinyint" />
+          <Property Name="PulseDrive" Type="tinyint" />
+          <Property Name="PlasmaTech" Type="tinyint" />
+          <Property Name="FtlTech" Type="tinyint" />
+          <Property Name="ExpeditionTech" Type="tinyint" />
+          <Property Name="WarpDrive" Type="tinyint" />
+          <Property Name="ARCN" Type="tinyint" />
+          <Property Name="ABMissile" Type="tinyint" />
+          <Property Name="IBMissile" Type="tinyint" />
+          <Property Name="TechsId" Type="int" />
+          <Property Name="BuildingsId" Type="int" />
+        </EntityType>
+        <EntityType Name="EspionageAccess">
+          <Key>
+            <PropertyRef Name="GrantedUserId" />
+            <PropertyRef Name="EspionageReportId" />
+          </Key>
+          <Property Name="GrantedUserId" Type="int" Nullable="false" />
+          <Property Name="EspionageReportId" Type="int" Nullable="false" />
+          <Property Name="GrantedDate" Type="date" />
+          <Property Name="GrantedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="EspionageBuilding">
+          <Key>
+            <PropertyRef Name="EspionageBuildingId" />
+          </Key>
+          <Property Name="EspionageBuildingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShipYard" Type="tinyint" />
+          <Property Name="Capitol" Type="tinyint" />
+          <Property Name="ResearchLab" Type="tinyint" />
+          <Property Name="MissileSilo" Type="tinyint" />
+          <Property Name="Factory" Type="tinyint" />
+          <Property Name="OreWarehouse" Type="tinyint" />
+          <Property Name="CrystalWarehouse" Type="tinyint" />
+          <Property Name="HydrogenStorage" Type="tinyint" />
+          <Property Name="Foundry" Type="tinyint" />
+          <Property Name="OreMine" Type="tinyint" />
+          <Property Name="CrystalMine" Type="tinyint" />
+          <Property Name="HydrogenSynthesizer" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="EspionageReport">
+          <Key>
+            <PropertyRef Name="ErId" />
+          </Key>
+          <Property Name="ErId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EspionageId" Type="int" />
+          <Property Name="IsExtreme" Type="bit" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="PositionId" Type="int" Nullable="false" />
+          <Property Name="Ore" Type="int" Nullable="false" />
+          <Property Name="Crystal" Type="int" Nullable="false" />
+          <Property Name="Hydrogen" Type="int" Nullable="false" />
+          <Property Name="ApproximateTime" Type="smalldatetime" Nullable="false" />
+          <Property Name="HasShips" Type="bit" />
+          <Property Name="HasDefenses" Type="bit" />
+          <Property Name="UniverseId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="EspionageT">
+          <Key>
+            <PropertyRef Name="EspionageTId" />
+          </Key>
+          <Property Name="EspionageTId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LaserTech" Type="tinyint" />
+          <Property Name="ArmorTech" Type="tinyint" />
+          <Property Name="WeaponsTech" Type="tinyint" />
+          <Property Name="ShieldTech" Type="tinyint" />
+          <Property Name="ParticleTech" Type="tinyint" />
+          <Property Name="JetDrive" Type="tinyint" />
+          <Property Name="AiTech" Type="tinyint" />
+          <Property Name="EnergyTech" Type="tinyint" />
+          <Property Name="EspionageTech" Type="tinyint" />
+          <Property Name="PulseDrive" Type="tinyint" />
+          <Property Name="PlasmaTech" Type="tinyint" />
+          <Property Name="FtlTech" Type="tinyint" />
+          <Property Name="ExpeditionTech" Type="tinyint" />
+          <Property Name="WarpDrive" Type="tinyint" />
+          <Property Name="ARCN" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="ExplorerUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Token" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="AllianceId" Type="int" />
+          <Property Name="IsOfficer" Type="bit" Nullable="false" />
+          <Property Name="XPlayerId" Type="int" />
+          <Property Name="XAllianceId" Type="int" />
+          <Property Name="XIsOfficer" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExplorerUser_Alliance">
+          <Key>
+            <PropertyRef Name="ExplorerUserId" />
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="ExplorerUserId" Type="int" Nullable="false" />
+          <Property Name="UniverseId" Type="tinyint" Nullable="false" />
+          <Property Name="AllianceId" Type="int" Nullable="false" />
+          <Property Name="IsOfficer" Type="bit" Nullable="false" />
+          <Property Name="ExplorerAllianceJoined" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExplorerUser_Player">
+          <Key>
+            <PropertyRef Name="ExplorerUserId" />
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="ExplorerUserId" Type="int" Nullable="false" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="UniverseId" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameSystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Galaxy" Type="tinyint" Nullable="false" />
+          <Property Name="GameSystem" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OpenId">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Name="Url" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShortDescription" Type="varchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="4" />
+          <Property Name="AllianceId" Type="int" />
+          <Property Name="Added" Type="smalldatetime" Nullable="false" />
+          <Property Name="Updated" Type="smalldatetime" Nullable="false" />
+          <Property Name="IsExtreme" Type="bit" />
+          <Property Name="UniverseId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="PlayerComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="varchar" Nullable="false" MaxLength="512" />
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Added" Type="datetime" Nullable="false" />
+          <Property Name="PermissionId" Type="int" />
+        </EntityType>
+        <EntityType Name="PlayerHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="4" />
+          <Property Name="AllianceId" Type="int" />
+          <Property Name="Date" Type="smalldatetime" Nullable="false" />
+          <Property Name="Archived" Type="smalldatetime" Nullable="false" />
+          <Property Name="IsExtreme" Type="bit" />
+          <Property Name="UniverseId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameSystemId" Type="int" Nullable="false" />
+          <Property Name="Slot" Type="tinyint" Nullable="false" />
+          <Property Name="IsMoon" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PositionSnapshot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IsExtreme" Type="bit" Nullable="false" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="PositionId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="UniverseId" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationId" />
+          </Key>
+          <Property Name="RegistrationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="ReportShip">
+          <Key>
+            <PropertyRef Name="EspReportId" />
+            <PropertyRef Name="CombatUnitId" />
+          </Key>
+          <Property Name="EspReportId" Type="int" Nullable="false" />
+          <Property Name="CombatUnitId" Type="tinyint" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SnapshotAccess">
+          <Key>
+            <PropertyRef Name="GrantedUserId" />
+            <PropertyRef Name="PositionSnapshotId" />
+          </Key>
+          <Property Name="GrantedUserId" Type="int" Nullable="false" />
+          <Property Name="PositionSnapshotId" Type="int" Nullable="false" />
+          <Property Name="PositionSnapshotDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="GrantedDate" Type="smalldatetime" />
+          <Property Name="GrantedBy" Type="int" />
+          <Property Name="PositionSnapshotUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="System">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Galaxy" Type="tinyint" Nullable="false" />
+          <Property Name="System" Type="int" Nullable="false" />
+          <Property Name="Updated" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Universe">
+          <Key>
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="UniverseId" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShortName" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="LongName" Type="varchar" MaxLength="20" />
+          <Property Name="HtmlMap" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserAlliance">
+          <Key>
+            <PropertyRef Name="UserGuid" />
+          </Key>
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AllianceId" Type="int" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="Officer" Type="bit" />
+          <Property Name="Token" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK__Espionage__Build__251C81ED">
+          <End Role="EspionageBuilding" Type="MaslowJax_dbsModel.Store.EspionageBuilding" Multiplicity="0..1" />
+          <End Role="Espionage" Type="MaslowJax_dbsModel.Store.Espionage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EspionageBuilding">
+              <PropertyRef Name="EspionageBuildingId" />
+            </Principal>
+            <Dependent Role="Espionage">
+              <PropertyRef Name="BuildingsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alliance_Universe">
+          <End Role="Universe" Type="MaslowJax_dbsModel.Store.Universe" Multiplicity="0..1" />
+          <End Role="Alliance" Type="MaslowJax_dbsModel.Store.Alliance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Universe">
+              <PropertyRef Name="UniverseId" />
+            </Principal>
+            <Dependent Role="Alliance">
+              <PropertyRef Name="UniverseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MaslowJax_dbsModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MaslowJax_dbsEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Alliances" EntityType="MaslowJax_dbsModel.Alliance" />
+          <EntitySet Name="AllianceCandidates" EntityType="MaslowJax_dbsModel.AllianceCandidate" />
+          <EntitySet Name="CombatUnits" EntityType="MaslowJax_dbsModel.CombatUnit" />
+          <EntitySet Name="Espionages" EntityType="MaslowJax_dbsModel.Espionage" />
+          <EntitySet Name="EspionageAccesses" EntityType="MaslowJax_dbsModel.EspionageAccess" />
+          <EntitySet Name="EspionageBuildings" EntityType="MaslowJax_dbsModel.EspionageBuilding" />
+          <EntitySet Name="EspionageReports" EntityType="MaslowJax_dbsModel.EspionageReport" />
+          <EntitySet Name="EspionageTs" EntityType="MaslowJax_dbsModel.EspionageT" />
+          <EntitySet Name="ExplorerUsers" EntityType="MaslowJax_dbsModel.ExplorerUser" />
+          <EntitySet Name="ExplorerUser_Alliance" EntityType="MaslowJax_dbsModel.ExplorerUser_Alliance" />
+          <EntitySet Name="ExplorerUser_Player" EntityType="MaslowJax_dbsModel.ExplorerUser_Player" />
+          <EntitySet Name="GameSystems" EntityType="MaslowJax_dbsModel.GameSystem" />
+          <EntitySet Name="OpenIds" EntityType="MaslowJax_dbsModel.OpenId" />
+          <EntitySet Name="Permissions" EntityType="MaslowJax_dbsModel.Permission" />
+          <EntitySet Name="Players" EntityType="MaslowJax_dbsModel.Player" />
+          <EntitySet Name="PlayerComments" EntityType="MaslowJax_dbsModel.PlayerComment" />
+          <EntitySet Name="PlayerHistories" EntityType="MaslowJax_dbsModel.PlayerHistory" />
+          <EntitySet Name="Positions" EntityType="MaslowJax_dbsModel.Position" />
+          <EntitySet Name="PositionSnapshots" EntityType="MaslowJax_dbsModel.PositionSnapshot" />
+          <EntitySet Name="Registrations" EntityType="MaslowJax_dbsModel.Registration" />
+          <EntitySet Name="ReportShips" EntityType="MaslowJax_dbsModel.ReportShip" />
+          <EntitySet Name="SnapshotAccesses" EntityType="MaslowJax_dbsModel.SnapshotAccess" />
+          <EntitySet Name="SfcSystems" EntityType="MaslowJax_dbsModel.SfcSystem" />
+          <EntitySet Name="Universes" EntityType="MaslowJax_dbsModel.Universe" />
+          <EntitySet Name="UserAlliances" EntityType="MaslowJax_dbsModel.UserAlliance" />
+          <AssociationSet Name="FK_Alliance_Universe" Association="MaslowJax_dbsModel.FK_Alliance_Universe">
+            <End Role="Universe" EntitySet="Universes" />
+            <End Role="Alliance" EntitySet="Alliances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Espionage__Build__251C81ED" Association="MaslowJax_dbsModel.FK__Espionage__Build__251C81ED">
+            <End Role="EspionageBuilding" EntitySet="EspionageBuildings" />
+            <End Role="Espionage" EntitySet="Espionages" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Alliance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Shortname" Type="String" Nullable="false" MaxLength="8" Unicode="true" FixedLength="false" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="UniverseId" Type="Byte" />
+          <Property Name="IsExtreme" Type="Boolean" />
+          <Property Name="Added" Type="DateTime" Precision="0" />
+          <Property Name="Updated" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Universe" Relationship="MaslowJax_dbsModel.FK_Alliance_Universe" FromRole="Alliance" ToRole="Universe" />
+        </EntityType>
+        <EntityType Name="AllianceCandidate">
+          <Key>
+            <PropertyRef Name="UserGuid" />
+            <PropertyRef Name="AllianceId" />
+          </Key>
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+          <Property Name="AllianceId" Type="Int32" Nullable="false" />
+          <Property Name="Applicant" Type="Boolean" Nullable="false" />
+          <Property Name="Invite" Type="Boolean" Nullable="false" />
+          <Property Name="UniverseId" Type="Byte" />
+        </EntityType>
+        <EntityType Name="CombatUnit">
+          <Key>
+            <PropertyRef Name="CombatUnitId" />
+          </Key>
+          <Property Name="CombatUnitId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+          <Property Name="BattleCalcField" Type="Byte" Nullable="false" />
+          <Property Name="MakesDebris" Type="Boolean" Nullable="false" />
+          <Property Name="BaseSpeed" Type="Int32" Nullable="false" />
+          <Property Name="BaseSpeed2" Type="Int16" />
+          <Property Name="Ore" Type="Int32" Nullable="false" />
+          <Property Name="Crystal" Type="Int32" Nullable="false" />
+          <Property Name="Hydrogen" Type="Int32" Nullable="false" />
+          <Property Name="BaseAttack" Type="Int32" Nullable="false" />
+          <Property Name="BaseShield" Type="Int32" Nullable="false" />
+          <Property Name="BaseHull" Type="Int32" Nullable="false" />
+          <Property Name="CargoCapacity" Type="Int32" Nullable="false" />
+          <Property Name="FuelConsumption" Type="Int32" Nullable="false" />
+          <Property Name="FuelConsumption2" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Espionage">
+          <Key>
+            <PropertyRef Name="EspionageId" />
+          </Key>
+          <Property Name="EspionageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ShipYard" Type="Byte" />
+          <Property Name="Capitol" Type="Byte" />
+          <Property Name="ResearchLab" Type="Byte" />
+          <Property Name="MissileSilo" Type="Byte" />
+          <Property Name="Factory" Type="Byte" />
+          <Property Name="OreWarehouse" Type="Byte" />
+          <Property Name="CrystalWarehouse" Type="Byte" />
+          <Property Name="HydrogenStorage" Type="Byte" />
+          <Property Name="Foundry" Type="Byte" />
+          <Property Name="OreMine" Type="Byte" />
+          <Property Name="CrystalMine" Type="Byte" />
+          <Property Name="HydrogenSynthesizer" Type="Byte" />
+          <Property Name="LaserTech" Type="Byte" />
+          <Property Name="ArmorTech" Type="Byte" />
+          <Property Name="WeaponsTech" Type="Byte" />
+          <Property Name="ShieldTech" Type="Byte" />
+          <Property Name="ParticleTech" Type="Byte" />
+          <Property Name="JetDrive" Type="Byte" />
+          <Property Name="AiTech" Type="Byte" />
+          <Property Name="EnergyTech" Type="Byte" />
+          <Property Name="EspionageTech" Type="Byte" />
+          <Property Name="PulseDrive" Type="Byte" />
+          <Property Name="PlasmaTech" Type="Byte" />
+          <Property Name="FtlTech" Type="Byte" />
+          <Property Name="ExpeditionTech" Type="Byte" />
+          <Property Name="WarpDrive" Type="Byte" />
+          <Property Name="ARCN" Type="Byte" />
+          <Property Name="ABMissile" Type="Byte" />
+          <Property Name="IBMissile" Type="Byte" />
+          <Property Name="TechsId" Type="Int32" />
+          <Property Name="BuildingsId" Type="Int32" />
+          <NavigationProperty Name="EspionageBuilding" Relationship="MaslowJax_dbsModel.FK__Espionage__Build__251C81ED" FromRole="Espionage" ToRole="EspionageBuilding" />
+        </EntityType>
+        <EntityType Name="EspionageAccess">
+          <Key>
+            <PropertyRef Name="GrantedUserId" />
+            <PropertyRef Name="EspionageReportId" />
+          </Key>
+          <Property Name="GrantedUserId" Type="Int32" Nullable="false" />
+          <Property Name="EspionageReportId" Type="Int32" Nullable="false" />
+          <Property Name="GrantedDate" Type="DateTime" Precision="0" />
+          <Property Name="GrantedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="EspionageBuilding">
+          <Key>
+            <PropertyRef Name="EspionageBuildingId" />
+          </Key>
+          <Property Name="EspionageBuildingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ShipYard" Type="Byte" />
+          <Property Name="Capitol" Type="Byte" />
+          <Property Name="ResearchLab" Type="Byte" />
+          <Property Name="MissileSilo" Type="Byte" />
+          <Property Name="Factory" Type="Byte" />
+          <Property Name="OreWarehouse" Type="Byte" />
+          <Property Name="CrystalWarehouse" Type="Byte" />
+          <Property Name="HydrogenStorage" Type="Byte" />
+          <Property Name="Foundry" Type="Byte" />
+          <Property Name="OreMine" Type="Byte" />
+          <Property Name="CrystalMine" Type="Byte" />
+          <Property Name="HydrogenSynthesizer" Type="Byte" />
+          <NavigationProperty Name="Espionages" Relationship="MaslowJax_dbsModel.FK__Espionage__Build__251C81ED" FromRole="EspionageBuilding" ToRole="Espionage" />
+        </EntityType>
+        <EntityType Name="EspionageReport">
+          <Key>
+            <PropertyRef Name="ErId" />
+          </Key>
+          <Property Name="ErId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="EspionageId" Type="Int32" />
+          <Property Name="IsExtreme" Type="Boolean" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="PositionId" Type="Int32" Nullable="false" />
+          <Property Name="Ore" Type="Int32" Nullable="false" />
+          <Property Name="Crystal" Type="Int32" Nullable="false" />
+          <Property Name="Hydrogen" Type="Int32" Nullable="false" />
+          <Property Name="ApproximateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="HasShips" Type="Boolean" />
+          <Property Name="HasDefenses" Type="Boolean" />
+          <Property Name="UniverseId" Type="Byte" />
+        </EntityType>
+        <EntityType Name="EspionageT">
+          <Key>
+            <PropertyRef Name="EspionageTId" />
+          </Key>
+          <Property Name="EspionageTId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="LaserTech" Type="Byte" />
+          <Property Name="ArmorTech" Type="Byte" />
+          <Property Name="WeaponsTech" Type="Byte" />
+          <Property Name="ShieldTech" Type="Byte" />
+          <Property Name="ParticleTech" Type="Byte" />
+          <Property Name="JetDrive" Type="Byte" />
+          <Property Name="AiTech" Type="Byte" />
+          <Property Name="EnergyTech" Type="Byte" />
+          <Property Name="EspionageTech" Type="Byte" />
+          <Property Name="PulseDrive" Type="Byte" />
+          <Property Name="PlasmaTech" Type="Byte" />
+          <Property Name="FtlTech" Type="Byte" />
+          <Property Name="ExpeditionTech" Type="Byte" />
+          <Property Name="WarpDrive" Type="Byte" />
+          <Property Name="ARCN" Type="Byte" />
+        </EntityType>
+        <EntityType Name="ExplorerUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+          <Property Name="Token" Type="Guid" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="AllianceId" Type="Int32" />
+          <Property Name="IsOfficer" Type="Boolean" Nullable="false" />
+          <Property Name="XPlayerId" Type="Int32" />
+          <Property Name="XAllianceId" Type="Int32" />
+          <Property Name="XIsOfficer" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExplorerUser_Alliance">
+          <Key>
+            <PropertyRef Name="ExplorerUserId" />
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="ExplorerUserId" Type="Int32" Nullable="false" />
+          <Property Name="UniverseId" Type="Byte" Nullable="false" />
+          <Property Name="AllianceId" Type="Int32" Nullable="false" />
+          <Property Name="IsOfficer" Type="Boolean" Nullable="false" />
+          <Property Name="ExplorerAllianceJoined" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ExplorerUser_Player">
+          <Key>
+            <PropertyRef Name="ExplorerUserId" />
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="ExplorerUserId" Type="Int32" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="UniverseId" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameSystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Galaxy" Type="Byte" Nullable="false" />
+          <Property Name="GameSystem1" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OpenId">
+          <Key>
+            <PropertyRef Name="Url" />
+          </Key>
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="AllianceId" Type="Int32" />
+          <Property Name="Added" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsExtreme" Type="Boolean" />
+          <Property Name="UniverseId" Type="Byte" />
+        </EntityType>
+        <EntityType Name="PlayerComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="512" Unicode="false" FixedLength="false" />
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+          <Property Name="Added" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PermissionId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PlayerHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="PlayerId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="AllianceId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Archived" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsExtreme" Type="Boolean" />
+          <Property Name="UniverseId" Type="Byte" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="GameSystemId" Type="Int32" Nullable="false" />
+          <Property Name="Slot" Type="Byte" Nullable="false" />
+          <Property Name="IsMoon" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PositionSnapshot">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="IsExtreme" Type="Boolean" Nullable="false" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="PositionId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UniverseId" Type="Byte" />
+        </EntityType>
+        <EntityType Name="Registration">
+          <Key>
+            <PropertyRef Name="RegistrationId" />
+          </Key>
+          <Property Name="RegistrationId" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ReportShip">
+          <Key>
+            <PropertyRef Name="EspReportId" />
+            <PropertyRef Name="CombatUnitId" />
+          </Key>
+          <Property Name="EspReportId" Type="Int32" Nullable="false" />
+          <Property Name="CombatUnitId" Type="Byte" Nullable="false" />
+          <Property Name="Total" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SnapshotAccess">
+          <Key>
+            <PropertyRef Name="GrantedUserId" />
+            <PropertyRef Name="PositionSnapshotId" />
+          </Key>
+          <Property Name="GrantedUserId" Type="Int32" Nullable="false" />
+          <Property Name="PositionSnapshotId" Type="Int32" Nullable="false" />
+          <Property Name="PositionSnapshotDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GrantedDate" Type="DateTime" Precision="0" />
+          <Property Name="GrantedBy" Type="Int32" />
+          <Property Name="PositionSnapshotUpdated" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SfcSystem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Galaxy" Type="Byte" Nullable="false" />
+          <Property Name="System1" Type="Int32" Nullable="false" />
+          <Property Name="Updated" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Universe">
+          <Key>
+            <PropertyRef Name="UniverseId" />
+          </Key>
+          <Property Name="UniverseId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ShortName" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="false" />
+          <Property Name="LongName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="HtmlMap" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Alliances" Relationship="MaslowJax_dbsModel.FK_Alliance_Universe" FromRole="Universe" ToRole="Alliance" />
+        </EntityType>
+        <EntityType Name="UserAlliance">
+          <Key>
+            <PropertyRef Name="UserGuid" />
+          </Key>
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+          <Property Name="AllianceId" Type="Int32" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="Officer" Type="Boolean" />
+          <Property Name="Token" Type="Guid" />
+        </EntityType>
+        <Association Name="FK_Alliance_Universe">
+          <End Role="Universe" Type="MaslowJax_dbsModel.Universe" Multiplicity="0..1" />
+          <End Role="Alliance" Type="MaslowJax_dbsModel.Alliance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Universe">
+              <PropertyRef Name="UniverseId" />
+            </Principal>
+            <Dependent Role="Alliance">
+              <PropertyRef Name="UniverseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Espionage__Build__251C81ED">
+          <End Role="EspionageBuilding" Type="MaslowJax_dbsModel.EspionageBuilding" Multiplicity="0..1" />
+          <End Role="Espionage" Type="MaslowJax_dbsModel.Espionage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EspionageBuilding">
+              <PropertyRef Name="EspionageBuildingId" />
+            </Principal>
+            <Dependent Role="Espionage">
+              <PropertyRef Name="BuildingsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MaslowJax_dbsModelStoreContainer" CdmEntityContainer="MaslowJax_dbsEntities">
+          <EntitySetMapping Name="Alliances">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Alliance">
+              <MappingFragment StoreEntitySet="Alliance">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Shortname" ColumnName="Shortname" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+                <ScalarProperty Name="IsExtreme" ColumnName="IsExtreme" />
+                <ScalarProperty Name="Added" ColumnName="Added" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllianceCandidates">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.AllianceCandidate">
+              <MappingFragment StoreEntitySet="AllianceCandidate">
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="Applicant" ColumnName="Applicant" />
+                <ScalarProperty Name="Invite" ColumnName="Invite" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CombatUnits">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.CombatUnit">
+              <MappingFragment StoreEntitySet="CombatUnit">
+                <ScalarProperty Name="CombatUnitId" ColumnName="CombatUnitId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BattleCalcField" ColumnName="BattleCalcField" />
+                <ScalarProperty Name="MakesDebris" ColumnName="MakesDebris" />
+                <ScalarProperty Name="BaseSpeed" ColumnName="BaseSpeed" />
+                <ScalarProperty Name="BaseSpeed2" ColumnName="BaseSpeed2" />
+                <ScalarProperty Name="Ore" ColumnName="Ore" />
+                <ScalarProperty Name="Crystal" ColumnName="Crystal" />
+                <ScalarProperty Name="Hydrogen" ColumnName="Hydrogen" />
+                <ScalarProperty Name="BaseAttack" ColumnName="BaseAttack" />
+                <ScalarProperty Name="BaseShield" ColumnName="BaseShield" />
+                <ScalarProperty Name="BaseHull" ColumnName="BaseHull" />
+                <ScalarProperty Name="CargoCapacity" ColumnName="CargoCapacity" />
+                <ScalarProperty Name="FuelConsumption" ColumnName="FuelConsumption" />
+                <ScalarProperty Name="FuelConsumption2" ColumnName="FuelConsumption2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Espionages">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Espionage">
+              <MappingFragment StoreEntitySet="Espionage">
+                <ScalarProperty Name="EspionageId" ColumnName="EspionageId" />
+                <ScalarProperty Name="ShipYard" ColumnName="ShipYard" />
+                <ScalarProperty Name="Capitol" ColumnName="Capitol" />
+                <ScalarProperty Name="ResearchLab" ColumnName="ResearchLab" />
+                <ScalarProperty Name="MissileSilo" ColumnName="MissileSilo" />
+                <ScalarProperty Name="Factory" ColumnName="Factory" />
+                <ScalarProperty Name="OreWarehouse" ColumnName="OreWarehouse" />
+                <ScalarProperty Name="CrystalWarehouse" ColumnName="CrystalWarehouse" />
+                <ScalarProperty Name="HydrogenStorage" ColumnName="HydrogenStorage" />
+                <ScalarProperty Name="Foundry" ColumnName="Foundry" />
+                <ScalarProperty Name="OreMine" ColumnName="OreMine" />
+                <ScalarProperty Name="CrystalMine" ColumnName="CrystalMine" />
+                <ScalarProperty Name="HydrogenSynthesizer" ColumnName="HydrogenSynthesizer" />
+                <ScalarProperty Name="LaserTech" ColumnName="LaserTech" />
+                <ScalarProperty Name="ArmorTech" ColumnName="ArmorTech" />
+                <ScalarProperty Name="WeaponsTech" ColumnName="WeaponsTech" />
+                <ScalarProperty Name="ShieldTech" ColumnName="ShieldTech" />
+                <ScalarProperty Name="ParticleTech" ColumnName="ParticleTech" />
+                <ScalarProperty Name="JetDrive" ColumnName="JetDrive" />
+                <ScalarProperty Name="AiTech" ColumnName="AiTech" />
+                <ScalarProperty Name="EnergyTech" ColumnName="EnergyTech" />
+                <ScalarProperty Name="EspionageTech" ColumnName="EspionageTech" />
+                <ScalarProperty Name="PulseDrive" ColumnName="PulseDrive" />
+                <ScalarProperty Name="PlasmaTech" ColumnName="PlasmaTech" />
+                <ScalarProperty Name="FtlTech" ColumnName="FtlTech" />
+                <ScalarProperty Name="ExpeditionTech" ColumnName="ExpeditionTech" />
+                <ScalarProperty Name="WarpDrive" ColumnName="WarpDrive" />
+                <ScalarProperty Name="ARCN" ColumnName="ARCN" />
+                <ScalarProperty Name="ABMissile" ColumnName="ABMissile" />
+                <ScalarProperty Name="IBMissile" ColumnName="IBMissile" />
+                <ScalarProperty Name="TechsId" ColumnName="TechsId" />
+                <ScalarProperty Name="BuildingsId" ColumnName="BuildingsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EspionageAccesses">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.EspionageAccess">
+              <MappingFragment StoreEntitySet="EspionageAccess">
+                <ScalarProperty Name="GrantedUserId" ColumnName="GrantedUserId" />
+                <ScalarProperty Name="EspionageReportId" ColumnName="EspionageReportId" />
+                <ScalarProperty Name="GrantedDate" ColumnName="GrantedDate" />
+                <ScalarProperty Name="GrantedBy" ColumnName="GrantedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EspionageBuildings">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.EspionageBuilding">
+              <MappingFragment StoreEntitySet="EspionageBuilding">
+                <ScalarProperty Name="EspionageBuildingId" ColumnName="EspionageBuildingId" />
+                <ScalarProperty Name="ShipYard" ColumnName="ShipYard" />
+                <ScalarProperty Name="Capitol" ColumnName="Capitol" />
+                <ScalarProperty Name="ResearchLab" ColumnName="ResearchLab" />
+                <ScalarProperty Name="MissileSilo" ColumnName="MissileSilo" />
+                <ScalarProperty Name="Factory" ColumnName="Factory" />
+                <ScalarProperty Name="OreWarehouse" ColumnName="OreWarehouse" />
+                <ScalarProperty Name="CrystalWarehouse" ColumnName="CrystalWarehouse" />
+                <ScalarProperty Name="HydrogenStorage" ColumnName="HydrogenStorage" />
+                <ScalarProperty Name="Foundry" ColumnName="Foundry" />
+                <ScalarProperty Name="OreMine" ColumnName="OreMine" />
+                <ScalarProperty Name="CrystalMine" ColumnName="CrystalMine" />
+                <ScalarProperty Name="HydrogenSynthesizer" ColumnName="HydrogenSynthesizer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EspionageReports">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.EspionageReport">
+              <MappingFragment StoreEntitySet="EspionageReport">
+                <ScalarProperty Name="ErId" ColumnName="ErId" />
+                <ScalarProperty Name="EspionageId" ColumnName="EspionageId" />
+                <ScalarProperty Name="IsExtreme" ColumnName="IsExtreme" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="Ore" ColumnName="Ore" />
+                <ScalarProperty Name="Crystal" ColumnName="Crystal" />
+                <ScalarProperty Name="Hydrogen" ColumnName="Hydrogen" />
+                <ScalarProperty Name="ApproximateTime" ColumnName="ApproximateTime" />
+                <ScalarProperty Name="HasShips" ColumnName="HasShips" />
+                <ScalarProperty Name="HasDefenses" ColumnName="HasDefenses" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EspionageTs">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.EspionageT">
+              <MappingFragment StoreEntitySet="EspionageT">
+                <ScalarProperty Name="EspionageTId" ColumnName="EspionageTId" />
+                <ScalarProperty Name="LaserTech" ColumnName="LaserTech" />
+                <ScalarProperty Name="ArmorTech" ColumnName="ArmorTech" />
+                <ScalarProperty Name="WeaponsTech" ColumnName="WeaponsTech" />
+                <ScalarProperty Name="ShieldTech" ColumnName="ShieldTech" />
+                <ScalarProperty Name="ParticleTech" ColumnName="ParticleTech" />
+                <ScalarProperty Name="JetDrive" ColumnName="JetDrive" />
+                <ScalarProperty Name="AiTech" ColumnName="AiTech" />
+                <ScalarProperty Name="EnergyTech" ColumnName="EnergyTech" />
+                <ScalarProperty Name="EspionageTech" ColumnName="EspionageTech" />
+                <ScalarProperty Name="PulseDrive" ColumnName="PulseDrive" />
+                <ScalarProperty Name="PlasmaTech" ColumnName="PlasmaTech" />
+                <ScalarProperty Name="FtlTech" ColumnName="FtlTech" />
+                <ScalarProperty Name="ExpeditionTech" ColumnName="ExpeditionTech" />
+                <ScalarProperty Name="WarpDrive" ColumnName="WarpDrive" />
+                <ScalarProperty Name="ARCN" ColumnName="ARCN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExplorerUsers">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.ExplorerUser">
+              <MappingFragment StoreEntitySet="ExplorerUser">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="IsOfficer" ColumnName="IsOfficer" />
+                <ScalarProperty Name="XPlayerId" ColumnName="XPlayerId" />
+                <ScalarProperty Name="XAllianceId" ColumnName="XAllianceId" />
+                <ScalarProperty Name="XIsOfficer" ColumnName="XIsOfficer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExplorerUser_Alliance">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.ExplorerUser_Alliance">
+              <MappingFragment StoreEntitySet="ExplorerUser_Alliance">
+                <ScalarProperty Name="ExplorerUserId" ColumnName="ExplorerUserId" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="IsOfficer" ColumnName="IsOfficer" />
+                <ScalarProperty Name="ExplorerAllianceJoined" ColumnName="ExplorerAllianceJoined" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExplorerUser_Player">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.ExplorerUser_Player">
+              <MappingFragment StoreEntitySet="ExplorerUser_Player">
+                <ScalarProperty Name="ExplorerUserId" ColumnName="ExplorerUserId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameSystems">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.GameSystem">
+              <MappingFragment StoreEntitySet="GameSystem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Galaxy" ColumnName="Galaxy" />
+                <ScalarProperty Name="GameSystem1" ColumnName="GameSystem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OpenIds">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.OpenId">
+              <MappingFragment StoreEntitySet="OpenId">
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Player">
+              <MappingFragment StoreEntitySet="Player">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="Added" ColumnName="Added" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+                <ScalarProperty Name="IsExtreme" ColumnName="IsExtreme" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerComments">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.PlayerComment">
+              <MappingFragment StoreEntitySet="PlayerComment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="Added" ColumnName="Added" />
+                <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlayerHistories">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.PlayerHistory">
+              <MappingFragment StoreEntitySet="PlayerHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Archived" ColumnName="Archived" />
+                <ScalarProperty Name="IsExtreme" ColumnName="IsExtreme" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GameSystemId" ColumnName="GameSystemId" />
+                <ScalarProperty Name="Slot" ColumnName="Slot" />
+                <ScalarProperty Name="IsMoon" ColumnName="IsMoon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PositionSnapshots">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.PositionSnapshot">
+              <MappingFragment StoreEntitySet="PositionSnapshot">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsExtreme" ColumnName="IsExtreme" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registrations">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Registration">
+              <MappingFragment StoreEntitySet="Registration">
+                <ScalarProperty Name="RegistrationId" ColumnName="RegistrationId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportShips">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.ReportShip">
+              <MappingFragment StoreEntitySet="ReportShip">
+                <ScalarProperty Name="EspReportId" ColumnName="EspReportId" />
+                <ScalarProperty Name="CombatUnitId" ColumnName="CombatUnitId" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SnapshotAccesses">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.SnapshotAccess">
+              <MappingFragment StoreEntitySet="SnapshotAccess">
+                <ScalarProperty Name="GrantedUserId" ColumnName="GrantedUserId" />
+                <ScalarProperty Name="PositionSnapshotId" ColumnName="PositionSnapshotId" />
+                <ScalarProperty Name="PositionSnapshotDate" ColumnName="PositionSnapshotDate" />
+                <ScalarProperty Name="GrantedDate" ColumnName="GrantedDate" />
+                <ScalarProperty Name="GrantedBy" ColumnName="GrantedBy" />
+                <ScalarProperty Name="PositionSnapshotUpdated" ColumnName="PositionSnapshotUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SfcSystems">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.SfcSystem">
+              <MappingFragment StoreEntitySet="System">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Galaxy" ColumnName="Galaxy" />
+                <ScalarProperty Name="System1" ColumnName="System" />
+                <ScalarProperty Name="Updated" ColumnName="Updated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Universes">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.Universe">
+              <MappingFragment StoreEntitySet="Universe">
+                <ScalarProperty Name="UniverseId" ColumnName="UniverseId" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="LongName" ColumnName="LongName" />
+                <ScalarProperty Name="HtmlMap" ColumnName="HtmlMap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAlliances">
+            <EntityTypeMapping TypeName="MaslowJax_dbsModel.UserAlliance">
+              <MappingFragment StoreEntitySet="UserAlliance">
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="AllianceId" ColumnName="AllianceId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Officer" ColumnName="Officer" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams />
+  </Designer>
+</edmx:Edmx>

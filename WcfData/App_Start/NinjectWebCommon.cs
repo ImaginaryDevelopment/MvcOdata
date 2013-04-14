@@ -1,23 +1,17 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(OData.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(OData.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(WcfData.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(WcfData.App_Start.NinjectWebCommon), "Stop")]
 
-namespace OData.App_Start
+namespace WcfData.App_Start
 {
-    using System;
-    using System.Web;
-    using System.Web.Http;
-    using System.Web.Mvc;
+	using System;
+	using System.Web;
 
-    using Contracts;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
 
-    using Webby;
 
-    using NinjectDependencyResolver = Ninject.Web.Mvc.NinjectDependencyResolver;
 
 	public static class NinjectWebCommon 
     {
@@ -52,8 +46,6 @@ namespace OData.App_Start
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             
             RegisterServices(kernel);
-						GlobalConfiguration.Configuration.DependencyResolver = new NinjectApiResolver(kernel);
-						DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
             return kernel;
         }
 
@@ -63,12 +55,7 @@ namespace OData.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-					var config=new Config();
-					kernel.Bind(typeof(IWcfProxyFactory<>)).To(typeof(WcfProxyFactory<>));
-					kernel.Bind(typeof(IDataServiceContextFactory<>))
-								 .To(typeof(DataServiceContextFactory<>))
-								 .WithConstructorArgument("uri", new Uri("http://localhost:4339/starfleetcommander.svc"));
-					kernel.Bind<IStartfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStartfleetCommander>>().GetContext(config));
+					kernel.Bind(typeof(Webby.IWcfProxyFactory<>)).To(typeof(Webby.WcfProxyFactory<>));
         }        
     }
 }

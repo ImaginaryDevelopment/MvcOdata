@@ -28,8 +28,8 @@ namespace OData.Controllers.OData
     /// OData Contract:<see cref="Contracts.IStartfleetCommander"/>
     /// OData Model:<see cref="Contracts.Universe"/>
     /// JIRA: <see href="http://jira/browse/DEV-775"/>
-	/// Odata: <see href="http://localhost/webby/OData/Universes?$top=10&$inlinecount=allpages"/>
-    /// Svc: <see href="http://localhost/webby/StartfleetCommander.svc/"/>
+	/// Odata: <see href="http://localhost:4339/webby/OData/Universes?$top=10&$inlinecount=allpages"/>
+    /// Svc: <see href="http://localhost:4339/StartfleetCommander.svc/"/>
     /// Svc JSON: <see href="http://localhost/webby/StartfleetCommander.svc?$format=json"/>
     /// Svc Model: <see href="http://localhost/webby/StartfleetCommander.svc/Universes"/>
     /// Svc Model JSON: <see href="http://localhost/webby/StartfleetCommander.svc/Universes?$format=json"/>
