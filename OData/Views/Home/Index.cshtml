@@ -4,13 +4,12 @@
 }
 
 <h2>Index</h2>
-
-<div data-bind="foreach:items">
-    <div data-bind="text:$data"></div>
-</div>
-<div data-bind="koGrid: { data: items }" style="min-height: 800px"></div>
+<div data-bind="koGrid: { data: items }" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div data-bind="text:message"></div>
+<div data-bind="foreach: items">
+    <div data-bind="text: $data"></div>
+</div>
 @section scripts
 {
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -30,7 +29,9 @@
                     self.items(d.value);
                     if (!self.initialized) {
                         self.initialized = true;
+                        self.message("initialized");
                         window.ko.applyBindings(komodel);
+                        self.message("ko bound");
                     }
                     
                 });
