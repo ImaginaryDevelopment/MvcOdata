@@ -59,3 +59,6 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+.error {
+    color: #f00;
+}

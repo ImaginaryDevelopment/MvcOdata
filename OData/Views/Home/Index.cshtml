@@ -13,6 +13,7 @@
     @Html.Raw(string.Format(ifBase, s, ".EndDate", "lt", prefix, surround) + Environment.NewLine)
 }
 <h2>Ko ftw!</h2>
+<div data-bind="visible:hasError,text:message" class="error"></div>
 <div>Search Grid
     @foreach (var m in ViewData.ModelMetadata.Properties)
     {
@@ -23,9 +24,19 @@
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div>Message:<span data-bind="text:message"></span></div>
-
-<div data-bind="foreach: items">
-    <div data-bind="text: $data"></div>
+<div>UseJson? <input type="checkbox" data-bind="checked:makeLinkJson"/></div>
+<div> urls:
+Odata Url:<a href="#" data-bind="attr:{href:OdataUrl},text:OdataUrl"></a>
+WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfDataUrl"></a>
+</div>
+<div data-bind="text:errorDetail"></div>
+<div>
+    Raw Items (no kogrid)
+    <div data-bind="foreach: items">
+        <div>
+            <span data-bind="text: JSON.stringify($data)">:</span><span data-bind="text: $data"></span>
+        </div>
+    </div>
 </div>
 @section scripts
 {
@@ -56,10 +67,13 @@
         };
     </script>
     <script>
-        var url="/OData/Universes"@*&$format=json" not working yet *@
+        var url = "/OData/Universes";
         var ViewModel = function (url) {
             var ko = window.ko;
             var self = this;
+            self.makeLinkJson = ko.observable(false);
+            self.hasError = ko.observable(false);
+            self.errorDetail = ko.observable();
             self.totalServerItems = ko.observable();
             self.defaultUri = url+'?';
             self.message = ko.observable('KO initialized');
@@ -150,14 +164,32 @@
                 pagingQuery+="&$inlinecount=allpages";
                 return pagingQuery;
             });
+            self.queryUrl = ko.computed(function() {
+                var query= self.filter() + self.ordering() + self.paging();
+               
+                
+                return query;
+            });
+            
             self.uri = ko.computed(function () {
                 var base = self.defaultUri;
-                //if (self.makeLinkJson())
-                //    base += '&json=true';
-                base += self.filter();
-                base += self.ordering();
-                base+= self.paging();
-                return base;
+                if (self.makeLinkJson())
+                    base += '&json=true';
+
+                return base + self.queryUrl();
+            });
+            self.OdataUrl = ko.computed(function() {
+                 
+               
+                return 'http://localhost:3875' + self.uri();
+
+            });
+            self.WcfDataUrl = ko.computed(function() {
+                
+                var query = 'http://localhost:4339/starfleetcommanderservice.svc/Universes?' + self.queryUrl();
+                if (self.makeLinkJson())
+                    query += "&$format=json";
+                return query;
             });
             self.pagingOptions = {
                 currentPage: self.page,                 
@@ -169,11 +201,12 @@
                 data: self.items,
                 enablePaging:true,
                 pagingOptions:self.pagingOptions,
-                afterSelectionChange: function(){return true;}   
+                afterSelectionChange: function(){}   
             };
             self.fetch = function() {
                 $.ajax(self.uri()).success(function (d) {
-                    
+                    self.hasError(false);
+                    self.message('fetched');
                     self.items.removeAll();
                     self.items(d.value);
                     self.totalServerItems(d.count);
@@ -184,12 +217,15 @@
                         self.message("ko bound");
                     }
                     
+                }).error(function(error,status,jqXhr) {
+                    self.message('query failed:' + status); //":"+JSON.stringify(error));
+                    self.hasError(true);
                 });
             };
             self.fetch();
         };
         var komodel = new ViewModel(url);
-        
+        //window.ko.applyBindings(komodel);
     </script>
    
 }
