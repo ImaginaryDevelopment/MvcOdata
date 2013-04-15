@@ -13,7 +13,7 @@
     @Html.Raw(string.Format(ifBase, s, ".EndDate", "lt", prefix, surround) + Environment.NewLine)
 }
 <h2>Index</h2>
-<div data-bind="koGrid: { data: items, pageSize:pagesize }" style="min-height: 200px"></div>
+<div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div data-bind="text:message"></div>
 <div data-bind="foreach: items">
@@ -30,6 +30,7 @@
         var ViewModel = function (url) {
             var ko = window.ko;
             var self = this;
+            self.totalServerItems = ko.observable();
             self.defaultUri = url+'?';
             self.message = ko.observable('KO initialized');
             self.items = ko.observableArray();
@@ -117,11 +118,24 @@
                 base+= self.paging();
                 return base;
             });
+            self.pagingOptions = {
+                currentPage: self.page,                 
+                pageSize:self.pagesize,
+                pageSizes: ko.observableArray([10,2,25]),
+                totalServerItems: self.totalServerItems
+            };
+            self.gridOptions = {
+                data: self.items,
+                enablePaging:true,
+                pagingOptions:self.pagingOptions,
+                afterSelectionChange: function(){return true;}   
+            };
             self.fetch = function() {
-                $.ajax(url).success(function (d) {
+                $.ajax(self.uri()).success(function (d) {
                     
                     self.items.removeAll();
                     self.items(d.value);
+                    self.totalServerItems(d.count);
                     if (!self.initialized) {
                         self.initialized = true;
                         self.message("initialized");
