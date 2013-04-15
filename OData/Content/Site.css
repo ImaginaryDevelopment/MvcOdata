@@ -62,3 +62,9 @@ textarea {
 .error {
     color: #f00;
 }
+.alternate {
+    background-color: #dddddd;
+}
+.wcflink span:hover {
+    background-color: gray;
+}

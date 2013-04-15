@@ -14,20 +14,33 @@
 }
 <h2>Ko ftw!</h2>
 <div data-bind="visible:hasError,text:message" class="error"></div>
-<div>Search Grid
+<div>
+    Search Grid
     @foreach (var m in ViewData.ModelMetadata.Properties)
     {
-     @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
+        @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
     }
-    HtmlMap search type <select name="HtmlMapSearchType" data-bind="options:searchOptions,optionsText:'text',optionsValue:'value',value:htmlMapSearchType"></select>
+    HtmlMap search type
+    <select name="HtmlMapSearchType" data-bind="options:searchOptions,optionsText:'text',optionsValue:'value',value:htmlMapSearchType"></select>
+    <select name="orderby" data-bind="options:sortOptions,optionsText:'text',optionsValue:'value',value:sortField"></select>
+    descending? <input type="checkbox" data-bind="checked:descending"/>
 </div>
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div>Message:<span data-bind="text:message"></span></div>
-<div>UseJson? <input type="checkbox" data-bind="checked:makeLinkJson"/></div>
-<div> urls:
-Odata Url:<a href="#" data-bind="attr:{href:OdataUrl},text:OdataUrl"></a>
-WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfDataUrl"></a>
+<div>UseJson?
+    <input type="checkbox" data-bind="checked:makeLinkJson" /></div>
+<div>
+    urls:
+
+    <div>Odata Url:<a href="#" data-bind="attr:{href:OdataUrl},text:OdataUrl"></a></div>
+    WCF Data services Url:<a href="#" class="wcflink" data-bind="attr:{href:WcfDataUrl}">
+        <span class="baseurl" data-bind="text:wcfDataBase"></span>
+                              <span class="filtering alternate" data-bind="text:filter"></span>
+                              <span class="ordering" data-bind="text:ordering,css:{alternate:orderingAlternate}"></span>
+                              <span class="paging" data-bind="text:paging,css:{alternate:pagingAlternate}"></span>
+        <span class="json" data-bind="text:wcfJson,css:{alternate:jsonAlternate}"></span>
+    </a>
 </div>
 <div data-bind="text:errorDetail"></div>
 <div>
@@ -40,7 +53,7 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
 </div>
 @section scripts
 {
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
     <script src="~/Scripts/koGrid-2.1.1.debug.js"></script>
     <script src="~/Scripts/KoExtensions.js"></script>
@@ -59,9 +72,9 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
                     newFilter =self.htmlMapSearchType() + '(\'' + self.HtmlMap() + '\',HtmlMap) eq true';
                     filters.push(newFilter);
                     //buildFilter('HtmlMap', 'substringof', '', "'");
-                break;
-            default :
-                buildFilter('HtmlMap', 'eq', '', "'");
+                    break;
+                default :
+                    buildFilter('HtmlMap', 'eq', '', "'");
             }
             
         };
@@ -75,7 +88,8 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
             self.hasError = ko.observable(false);
             self.errorDetail = ko.observable();
             self.totalServerItems = ko.observable();
-            self.defaultUri = url+'?';
+            self.odataBase = url+'?';
+            self.wcfDataBase = 'http://localhost:4339/starfleetcommanderservice.svc/Universes?';
             self.message = ko.observable('KO initialized');
             self.items = ko.observableArray();
             self.initialized = false;
@@ -90,7 +104,7 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
                 return 'A..Z';
             });
             @foreach (var p in shownOrderedProperties)
-             {
+            {
                  @: self['@p.PropertyName'] = ko.observable();
              }
             self.searchOptions = ko.observableArray([
@@ -98,6 +112,10 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
                 {text: 'exact match',value:'eq'},
                 {text: 'indexof contains',value:'indexof'},
                 {text:'contains',value:'substringof'}
+            ]);
+            self.sortOptions = ko.observableArray([
+                {text: '...',value:''},
+                {text: 'UniverseID',value:'UniverseID'}
             ]);
             self.htmlMapSearchType = ko.observable('eq');
             self.filter = ko.computed(function () {
@@ -122,19 +140,19 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
                     }
                 };
                 @foreach (var p in shownOrderedProperties)
-            {
-                var n = p.PropertyName;
+                {
+                    var n = p.PropertyName;
                 @: if(window.filterOverride && window.filterOverride.@n){
-                                                                    @: window.filterOverride.@(n)(self,filters,buildFilter);
-                                                @: } else {
-                if (isDateRange(p))
-                                                    {// @: is needed for indentation preservation
+                                                                                        @: window.filterOverride.@(n)(self,filters,buildFilter);
+                                                                    @: } else {
+                                                        if (isDateRange(p))
+                                                        {// @: is needed for indentation preservation
             @: @(KoIfDateRange(n))
                     }
-                                                    else
-                                                    {// @: is needed for indentation preservation
+                                                        else
+                                                        {// @: is needed for indentation preservation
                     @: buildFilter('@(n)','eq','@(p.ModelType == typeof(DateTime) || p.ModelType == typeof(DateTime?) ? "datetime" : string.Empty)' ,"@Html.Raw(p.ModelType.IsValueType ? string.Empty : "'")");                                                
-                                                                 }
+                                                                                     }
                  @:}
             }
                 if (filters.length > 0)
@@ -172,23 +190,38 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
             });
             
             self.uri = ko.computed(function () {
-                var base = self.defaultUri;
+                var base = self.odataBase;
+                var query= base + self.queryUrl();
                 if (self.makeLinkJson())
-                    base += '&json=true';
-
-                return base + self.queryUrl();
+                    query += '&json=true';
+                return query;
             });
+            
             self.OdataUrl = ko.computed(function() {
                  
                
                 return 'http://localhost:3875' + self.uri();
 
             });
+            self.orderingAlternate = ko.computed(function() {
+                return !self.filter();
+            });
+            self.pagingAlternate = ko.computed(function() {
+                //return (self.filter() && self.ordering() || (!self.filter() && !self.ordering()));
+                return !(!self.ordering() ^ !self.filter());
+            });
+            self.jsonAlternate = ko.computed(function() {
+                return !self.pagingAlternate(); //only works because paging is ALWAYS present in this context
+            });
+            self.wcfJson = ko.computed(function() {
+                if (self.makeLinkJson())
+                    return "&$format=json";
+                return '';
+            });
             self.WcfDataUrl = ko.computed(function() {
                 
-                var query = 'http://localhost:4339/starfleetcommanderservice.svc/Universes?' + self.queryUrl();
-                if (self.makeLinkJson())
-                    query += "&$format=json";
+                var query = self.wcfDataBase + self.queryUrl();
+                
                 return query;
             });
             self.pagingOptions = {
@@ -227,5 +260,5 @@ WCF Data services Url:<a href="#" data-bind="attr:{href:WcfDataUrl},text:WcfData
         var komodel = new ViewModel(url);
         //window.ko.applyBindings(komodel);
     </script>
-   
+
 }
