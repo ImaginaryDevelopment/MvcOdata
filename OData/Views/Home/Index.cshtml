@@ -8,7 +8,7 @@
 <div data-bind="foreach:items">
     <div data-bind="text:$data"></div>
 </div>
-<div data-bind="koGrid: { data: items }"></div>
+<div data-bind="koGrid: { data: items }" style="min-height: 800px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div data-bind="text:message"></div>
 @section scripts
@@ -22,15 +22,23 @@
             var self = this;
             self.message = ko.observable('KO initialized');
             self.items = ko.observableArray();
+            self.initialized = false;
             self.fetch = function() {
-                $.ajax(url).success(function(d) {
+                $.ajax(url).success(function (d) {
+                    
                     self.items.removeAll();
                     self.items(d.value);
+                    if (!self.initialized) {
+                        self.initialized = true;
+                        window.ko.applyBindings(komodel);
+                    }
+                    
                 });
             };
+            self.fetch();
         };
         var komodel = new ViewModel(url);
-        ko.applyBindings(komodel);
+        
     </script>
 
 }
