@@ -12,7 +12,13 @@
     @Html.Raw(string.Format(ifBase, s, ".StartDate", "ge", prefix, surround) + Environment.NewLine)
     @Html.Raw(string.Format(ifBase, s, ".EndDate", "lt", prefix, surround) + Environment.NewLine)
 }
-<h2>Index</h2>
+<h2>Ko ftw!</h2>
+<div>Search Grid
+    @foreach (var m in ViewData.ModelMetadata.Properties)
+    {
+     @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
+    }
+</div>
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div data-bind="text:message"></div>
@@ -45,13 +51,17 @@
                 }
                 return 'A..Z';
             });
+             @foreach (var p in shownOrderedProperties)
+             {
+                 @: self['@p.PropertyName'] = ko.observable();
+             }
             self.filter = ko.computed(function () {
                 var filter = '';
                 var filters = [];
                 var addFilter = '&$filter=';
                             @* ReSharper disable UnusedLocals *@
                 var buildFilter = function (name,operator, prefix, surround) {
-                                @* ReSharper restore UnusedLocals *@
+                    @* ReSharper restore UnusedLocals *@
                     if (self[name] && self[name]()) {
                     
                         var newFilter = name + ' ' + operator + ' ';
@@ -72,7 +82,7 @@
                 @: if(window.filterOverride && window.filterOverride.@n){
                                                                     @: window.filterOverride.@(n)(self,filters);
                                                 @: } else {
-                                                                                    if (isDateRange(p))
+                if (isDateRange(p))
                                                     {// @: is needed for indentation preservation
             @: @(KoIfDateRange(n))
                     }
