@@ -18,10 +18,12 @@
     {
      @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
     }
+    HtmlMap search type <select name="HtmlMapSearchType" data-bind="options:searchOptions,optionsText:'text',optionsValue:'value',value:htmlMapSearchType"></select>
 </div>
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
-<div data-bind="text:message"></div>
+<div>Message:<span data-bind="text:message"></span></div>
+
 <div data-bind="foreach: items">
     <div data-bind="text: $data"></div>
 </div>
@@ -31,6 +33,28 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
     <script src="~/Scripts/koGrid-2.1.1.debug.js"></script>
     <script src="~/Scripts/KoExtensions.js"></script>
+    <script id="odataoverrides">
+        window.filterOverride = {};
+        window.filterOverride.HtmlMap = function(self,filters,buildFilter) {
+            if (!self.HtmlMap())
+                return;
+            var newFilter;
+            switch(self.htmlMapSearchType()) {
+                case 'indexof':
+                    newFilter = self.htmlMapSearchType() + '(HtmlMap,\'' + self.HtmlMap() + '\') ge 0';
+                    filters.push(newFilter);
+                    break;
+                case 'substringof':
+                    newFilter =self.htmlMapSearchType() + '(\'' + self.HtmlMap() + '\',HtmlMap) eq true';
+                    filters.push(newFilter);
+                    //buildFilter('HtmlMap', 'substringof', '', "'");
+                break;
+            default :
+                buildFilter('HtmlMap', 'eq', '', "'");
+            }
+            
+        };
+    </script>
     <script>
         var url="/OData/Universes"@*&$format=json" not working yet *@
         var ViewModel = function (url) {
@@ -51,17 +75,24 @@
                 }
                 return 'A..Z';
             });
-             @foreach (var p in shownOrderedProperties)
+            @foreach (var p in shownOrderedProperties)
              {
                  @: self['@p.PropertyName'] = ko.observable();
              }
+            self.searchOptions = ko.observableArray([
+                
+                {text: 'exact match',value:'eq'},
+                {text: 'indexof contains',value:'indexof'},
+                {text:'contains',value:'substringof'}
+            ]);
+            self.htmlMapSearchType = ko.observable('eq');
             self.filter = ko.computed(function () {
                 var filter = '';
                 var filters = [];
                 var addFilter = '&$filter=';
-                            @* ReSharper disable UnusedLocals *@
+                                                            @* ReSharper disable UnusedLocals *@
                 var buildFilter = function (name,operator, prefix, surround) {
-                    @* ReSharper restore UnusedLocals *@
+                                                            @* ReSharper restore UnusedLocals *@
                     if (self[name] && self[name]()) {
                     
                         var newFilter = name + ' ' + operator + ' ';
@@ -80,7 +111,7 @@
             {
                 var n = p.PropertyName;
                 @: if(window.filterOverride && window.filterOverride.@n){
-                                                                    @: window.filterOverride.@(n)(self,filters);
+                                                                    @: window.filterOverride.@(n)(self,filters,buildFilter);
                                                 @: } else {
                 if (isDateRange(p))
                                                     {// @: is needed for indentation preservation

@@ -17,7 +17,9 @@ namespace WcfData
                     new Contracts.Universe() {UniverseID = 1, HtmlMap = "StarfleetCommander", ShortName = "sfc"},
                     new Contracts.Universe() {UniverseID = 2,HtmlMap = "SfcExtreme",ShortName = "sfe"},
                     new Contracts.Universe() {UniverseID = 3,HtmlMap = "Sfc2",ShortName = "sf2"},
-                    new Contracts.Universe() {UniverseID = 4,HtmlMap = "Sfc3",ShortName = "sf3"}
+                    new Contracts.Universe() {UniverseID = 4,HtmlMap = "Sfc3",ShortName = "sf3"},
+                    new Contracts.Universe() {UniverseID = 5,HtmlMap = "Sfc4",ShortName = "sf4"},
+                    new Contracts.Universe() {UniverseID = 6,HtmlMap = "Sfc5",ShortName = "sf5"},
                 }.AsQueryable();
 
     //public StarfleetCommanderRepository() //Func<dbsEntities> dbFactory)
