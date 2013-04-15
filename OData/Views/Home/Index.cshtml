@@ -55,7 +55,6 @@
             case 'substringof':
                 newFilter =self.htmlMapSearchType() + '(\'' + self.HtmlMap() + '\',HtmlMap) eq true';
                 filters.push(newFilter);
-                //buildFilter('HtmlMap', 'substringof', '', "'");
                 break;
             default :
                 buildFilter('HtmlMap', 'eq', '', "'");
