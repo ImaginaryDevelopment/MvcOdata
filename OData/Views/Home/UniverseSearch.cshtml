@@ -1,0 +1,12 @@
+﻿@model Contracts.Universe
+<div>
+    Search Grid
+    @foreach (var m in ViewData.ModelMetadata.Properties)
+    {
+        @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
+    }
+    HtmlMap search type
+    <select name="HtmlMapSearchType" data-bind="options:searchOptions,optionsText:'text',optionsValue:'value',value:htmlMapSearchType"></select>
+    <select name="orderby" data-bind="options:sortOptions,optionsText:'text',optionsValue:'value',value:sortField"></select>
+    descending? <input type="checkbox" data-bind="checked:descending"/>
+</div>

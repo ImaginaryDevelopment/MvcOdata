@@ -1,4 +1,47 @@
-﻿var addSearch = function(ko, self,url) {
+﻿var addSearch = function (ko, self, url) {
+    for (var i in self.columns) {
+        self[self.columns[i].Name] = ko.observable();
+    }
+    //self['@p.PropertyName'] = ko.observable();
+    self.filter = ko.computed(function () {
+        var filter = '';
+        var filters = [];
+        var addFilter = '&$filter=';
+
+        var buildFilter = function (name, operator, prefix, surround) {
+
+            if (self[name] && self[name]()) {
+
+                var newFilter = name + ' ' + operator + ' ';
+                if (self[name]() === -1 || self[name]() === "-1") {
+                    if (operator !== "eq")
+                        console.warn('null comparison on != eq');
+                    newFilter += 'null';
+                } else {
+                    newFilter += prefix + surround + self[name]() + surround;
+                }
+
+                filters.push(newFilter);
+            }
+        };
+        for (var j in self.columns) {
+            var n = self.columns[j];
+            if (window.filterOverride && window.filterOverride[n.Name]) {
+                window.filterOverride[n.Name](self, filters, buildFilter);
+            } else if (n.IsDateRange) {
+                var startName = n.Name + '.StartDate';
+                var endName = n.Name + '.EndDate';
+                buildFilter(startName, 'ge', 'datetime', '\'');
+                buildFilter(endName, 'lt', 'datetime', '\'');
+            } else {
+                var useDateTimePrefix = n.ModelType === "System.DateTime" || n.ModelType === "System.Nullable`1[System.DateTime]";
+                buildFilter(n.Name, 'eq', useDateTimePrefix ? 'datetime' : '', n.IsValueType ? '' : '\'');
+            }
+        }
+        if (filters.length > 0)
+            filter = addFilter + filters.join(" and ");
+        return filter;
+    });
     self.makeLinkJson = ko.observable(false);
     self.hasError = ko.observable(false);
     self.errorDetail = ko.observable();
@@ -114,7 +157,7 @@
     };
 };
 
-var addGridOptions = function(ko, self) {
+var addGridOptions = function (ko, self) {
     self.pagingOptions = {
         currentPage: self.page,
         pageSize: self.pagesize,

@@ -2,21 +2,13 @@
 @model Contracts.Universe
 @{
     ViewBag.Title = "Index";
+    var shownOrderedProperties = ViewData.ModelMetadata.Properties.OrderBy(a => a.PropertyName).ToArray();
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType.Name == "DateRange"; //typeof(DateRange) || m.TemplateHint ==  MVC.Shared.Views.EditorTemplates.DateTimeRange;   
 }
 
 <h2>Ko ftw!</h2>
 <div data-bind="visible:hasError,text:message" class="error"></div>
-<div>
-    Search Grid
-    @foreach (var m in ViewData.ModelMetadata.Properties)
-    {
-        @m.PropertyName <input data-bind="value:@m.PropertyName"/>   
-    }
-    HtmlMap search type
-    <select name="HtmlMapSearchType" data-bind="options:searchOptions,optionsText:'text',optionsValue:'value',value:htmlMapSearchType"></select>
-    <select name="orderby" data-bind="options:sortOptions,optionsText:'text',optionsValue:'value',value:sortField"></select>
-    descending? <input type="checkbox" data-bind="checked:descending"/>
-</div>
+@Html.Partial("UniverseSearch",Model)
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
 <a href="#" data-bind="click:fetch">Fetch</a>
 <div>Message:<span data-bind="text:message"></span></div>
@@ -76,13 +68,15 @@
         var ViewModel = function (url) {
             var ko = window.ko;
             var self = this;
-            @Html.Partial("ODataFilter",Model)
+            self.columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(shownOrderedProperties.Select(p=>
+                     new { Name = p.PropertyName, ModelType = p.ModelType.ToString(), IsDateRange = isDateRange(p),p.ModelType.IsValueType })));
+            
             addSearch(ko, self,url);
             addGridOptions(ko, self);
             self.fetch();
         };
         var komodel = new ViewModel(url);
-        //window.ko.applyBindings(komodel);
+        //window.ko.applyBindings(komodel); @*koGrid = fail! *@
     </script>
 
 }
