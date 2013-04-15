@@ -60,7 +60,7 @@ namespace WcfData.App_Start
         {
 					kernel.Bind(typeof(Webby.IWcfProxyFactory<>)).To(typeof(Webby.WcfProxyFactory<>));
 	        kernel.Bind<IStarfleetCommander>().To<StarfleetCommanderRepository>();
-	        kernel.Bind<Func<MaslowJax_dbsEntities>>().ToMethod(ctx => () => new MaslowJax_dbsEntities("imaginarydevelopment"));
+	        //kernel.Bind<Func<dbsEntities>>().ToMethod(ctx => () => new dbsEntities("connectionStringName"));
 	        ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(kernel));
         }        
     }
