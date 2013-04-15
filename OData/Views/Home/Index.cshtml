@@ -1,4 +1,5 @@
-﻿@model Contracts.Universe
+﻿@using OData.Models
+@model Contracts.Universe
 @{
     ViewBag.Title = "Index";
     var shownOrderedProperties = ViewData.ModelMetadata.Properties.OrderBy(a => a.PropertyName).ToArray();
@@ -33,14 +34,19 @@
 <div>
     urls:
 
-    <div>Odata Url:<a href="#" data-bind="attr:{href:OdataUrl},text:OdataUrl"></a></div>
+    <div>Odata Url:<a href="#" data-bind="attr:{href:odataUrl},text:odataUrl"></a>
+        @Html.Partial("ODataBoundLink",new ODataBoundLink(){ AnchorClass = "odatalink", BaseUrl = "odataBase", Href = "odataUrl", Json = "odataJson"})
+    </div>
     WCF Data services Url:<a href="#" class="wcflink" data-bind="attr:{href:WcfDataUrl}">
-        <span class="baseurl" data-bind="text:wcfDataBase"></span>
+                              <span class="baseurl" data-bind="text:wcfDataBase"></span>
                               <span class="filtering alternate" data-bind="text:filter"></span>
                               <span class="ordering" data-bind="text:ordering,css:{alternate:orderingAlternate}"></span>
                               <span class="paging" data-bind="text:paging,css:{alternate:pagingAlternate}"></span>
-        <span class="json" data-bind="text:wcfJson,css:{alternate:jsonAlternate}"></span>
-    </a>
+                              <span class="json" data-bind="text:wcfJson,css:{alternate:jsonAlternate}"></span>
+                          </a>
+    <div>
+    @Html.Partial("ODataBoundLink",new ODataBoundLink(){AnchorClass = "wcflink", BaseUrl="wcfDataBase", Href="WcfDataUrl",Json = "wcfJson"})
+        </div>
 </div>
 <div data-bind="text:errorDetail"></div>
 <div>
@@ -188,18 +194,20 @@
                 
                 return query;
             });
-            
+
+            self.odataJson = ko.computed(function() {
+                if (self.makeLinkJson())
+                    return '&json=true';
+                return '';
+            });
             self.uri = ko.computed(function () {
                 var base = self.odataBase;
                 var query= base + self.queryUrl();
-                if (self.makeLinkJson())
-                    query += '&json=true';
-                return query;
+                
+                return query+self.odataJson();
             });
             
-            self.OdataUrl = ko.computed(function() {
-                 
-               
+            self.odataUrl = ko.computed(function() {
                 return 'http://localhost:3875' + self.uri();
 
             });

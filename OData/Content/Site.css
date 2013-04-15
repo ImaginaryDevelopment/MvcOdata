@@ -65,6 +65,6 @@ textarea {
 .alternate {
     background-color: #dddddd;
 }
-.wcflink span:hover {
+.wcflink span:hover,.odatalink span:hover {
     background-color: gray;
 }
