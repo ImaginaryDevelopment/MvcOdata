@@ -1,4 +1,18 @@
-﻿var addSearch = function (ko, self, url) {
+﻿var addSearch = function (ko, self, odataUrl, wcfUrl) {
+    self.makeLinkJson = ko.observable(false);
+    self.hasError = ko.observable(false);
+    self.errorDetail = ko.observable();
+    self.totalServerItems = ko.observable();
+    self.odataBase = odataUrl + '?';
+    self.wcfDataBase = wcfUrl + '?';
+    self.message = ko.observable('KO initialized');
+    self.items = ko.observableArray();
+    self.initialized = false;
+    self.pagesize = ko.observable(10);
+    self.page = ko.observable(1);
+    self.sortField = ko.observable('');
+    self.descending = ko.observable(false);
+    
     for (var i in self.columns) {
         self[self.columns[i].Name] = ko.observable();
     }
@@ -42,19 +56,7 @@
             filter = addFilter + filters.join(" and ");
         return filter;
     });
-    self.makeLinkJson = ko.observable(false);
-    self.hasError = ko.observable(false);
-    self.errorDetail = ko.observable();
-    self.totalServerItems = ko.observable();
-    self.odataBase = url + '?';
-    self.wcfDataBase = 'http://localhost:4339/starfleetcommanderservice.svc/Universes?';
-    self.message = ko.observable('KO initialized');
-    self.items = ko.observableArray();
-    self.initialized = false;
-    self.pagesize = ko.observable(10);
-    self.page = ko.observable(1);
-    self.sortField = ko.observable('');
-    self.descending = ko.observable(false);
+   
 
     self.searchOptions = ko.observableArray([
 
@@ -110,10 +112,6 @@
         return query + self.odataJson();
     });
 
-    self.odataUrl = ko.computed(function () {
-        return 'http://localhost:3875' + self.uri();
-
-    });
     self.orderingAlternate = ko.computed(function () {
         return !self.filter();
     });

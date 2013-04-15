@@ -20,7 +20,7 @@
     
     
     <tr><td>Odata Url</td>
-        <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){ AnchorClass = "odatalink", BaseUrl = "odataBase", Href = "odataUrl", Json = "odataJson"})</td></tr>
+        <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){ AnchorClass = "odatalink", BaseUrl = "odataBase", Href = "uri", Json = "odataJson"})</td></tr>
     <tr><td>WCF Data services Url</td>
         <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){AnchorClass = "wcflink", BaseUrl="wcfDataBase", Href="WcfDataUrl",Json = "wcfJson"})</td></tr>
 </table>
@@ -65,17 +65,20 @@
     <script src="~/Scripts/SearchModel.js"></script>
     <script>
         var url = "/OData/Universes";
-        var ViewModel = function (url) {
+        
+        var wcfUrl= 'http://localhost:4339/starfleetcommanderservice.svc/Universes';
+        
+        var ViewModel = function (odataUrl,wcfUrl) {
             var ko = window.ko;
             var self = this;
             self.columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(shownOrderedProperties.Select(p=>
                      new { Name = p.PropertyName, ModelType = p.ModelType.ToString(), IsDateRange = isDateRange(p),p.ModelType.IsValueType })));
             
-            addSearch(ko, self,url);
+            addSearch(ko, self,odataUrl,wcfUrl);
             addGridOptions(ko, self);
             self.fetch();
         };
-        var komodel = new ViewModel(url);
+        var komodel = new ViewModel(url,wcfUrl);
         //window.ko.applyBindings(komodel); @*koGrid = fail! *@
     </script>
 
