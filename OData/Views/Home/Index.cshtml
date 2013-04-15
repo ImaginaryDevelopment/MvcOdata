@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2>Index</h2>
+<div data-bind="foreach:items"></div>
+
+@section scripts
+{
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+    <script>
+        var ViewModel=function() {
+            var self = this;
+            self.items = ko.observableArray();
+            
+        }
+    </script>
+
+}
