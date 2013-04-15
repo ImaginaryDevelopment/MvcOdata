@@ -4,18 +4,33 @@
 }
 
 <h2>Index</h2>
-<div data-bind="foreach:items"></div>
 
+<div data-bind="foreach:items">
+    <div data-bind="text:$data"></div>
+</div>
+<div data-bind="koGrid: { data: items }"></div>
+<a href="#" data-bind="click:fetch">Fetch</a>
+<div data-bind="text:message"></div>
 @section scripts
 {
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+    <script src="~/Scripts/koGrid-2.1.1.debug.js"></script>
     <script>
-        var ViewModel=function() {
+        var url="/OData/Universes?$inlinecount=allpages"@*&$format=json" not working yet *@
+        var ViewModel = function(url) {
             var self = this;
+            self.message = ko.observable('KO initialized');
             self.items = ko.observableArray();
-            
-        }
+            self.fetch = function() {
+                $.ajax(url).success(function(d) {
+                    self.items.removeAll();
+                    self.items(d.value);
+                });
+            };
+        };
+        var komodel = new ViewModel(url);
+        ko.applyBindings(komodel);
     </script>
 
 }
