@@ -68,3 +68,6 @@ textarea {
 .wcflink span:hover,.odatalink span:hover {
     background-color: gray;
 }
+.bordered {
+    border: black 1px solid;
+}
