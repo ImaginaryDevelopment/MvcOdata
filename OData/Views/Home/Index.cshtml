@@ -10,15 +10,15 @@
 <div data-bind="visible:hasError,text:message" class="error"></div>
 @Html.Partial("UniverseSearch",Model)
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
-<a href="#" data-bind="click:fetch">Fetch</a>
+<div>
+<a href="#" data-bind="click:fetch" class="button"><span>Fetch</span></a>    
+</div>
+
 <div>Message:<span data-bind="text:message"></span></div>
-<div>UseJson?
-    <input type="checkbox" data-bind="checked:makeLinkJson" /></div>
+<div><input type="checkbox" data-bind="checked:makeLinkJson" />UseJson</div>
     
 <table class="bordered">
-    <caption>Urls:</caption>
-    
-    
+    <caption>Urls</caption>
     <tr><td>Odata Url</td>
         <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){ AnchorClass = "odatalink", BaseUrl = "odataBase", Href = "uri", Json = "odataJson"})</td></tr>
     <tr><td>WCF Data services Url</td>
@@ -26,7 +26,8 @@
 </table>
    
 <div data-bind="text:errorDetail"></div>
-<div>
+<a href="#" data-bind="click:toggleRaw">Toggle Raw</a>
+<div data-bind="visible:showRaw">
     Raw Items (no kogrid)
     <div data-bind="foreach: items">
         <div>
@@ -71,11 +72,16 @@
         var ViewModel = function (odataUrl,wcfUrl) {
             var ko = window.ko;
             var self = this;
+            self.showRaw = ko.observable(false);
+            
             self.columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(shownOrderedProperties.Select(p=>
                      new { Name = p.PropertyName, ModelType = p.ModelType.ToString(), IsDateRange = isDateRange(p),p.ModelType.IsValueType })));
             
             addSearch(ko, self,odataUrl,wcfUrl);
             addGridOptions(ko, self);
+            self.toggleRaw = function() {
+                self.showRaw(!self.showRaw());
+            };
             self.fetch();
         };
         var komodel = new ViewModel(url,wcfUrl);

@@ -71,3 +71,25 @@ textarea {
 .bordered {
     border: black 1px solid;
 }
+.button {
+    
+    display: inline;
+    display: inline-block;
+    background-color: #000080;
+    color: white;
+    text-decoration: none;
+    margin: 3px;
+    padding: 0px 3px;
+}
+.button span,.button div {
+    display: inline;
+    display: inline-block;
+    margin: 4px;
+}
+.button:hover {
+    color: #000080;
+    background-color: white;
+    border: 1px inset #000080;
+    
+    
+}
