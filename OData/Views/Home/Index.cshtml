@@ -1,154 +1,90 @@
-﻿@model Contracts.Universe
+﻿@using OData.Models
+@model Contracts.Universe
 @{
     ViewBag.Title = "Index";
     var shownOrderedProperties = ViewData.ModelMetadata.Properties.OrderBy(a => a.PropertyName).ToArray();
-    Func<ModelMetadata, bool> isDateRange = m => m.ModelType.Name == "DateRange";//typeof(DateRange) || m.TemplateHint ==  MVC.Shared.Views.EditorTemplates.DateTimeRange;
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType.Name == "DateRange"; //typeof(DateRange) || m.TemplateHint ==  MVC.Shared.Views.EditorTemplates.DateTimeRange;   
 }
-@helper KoIfDateRange(string s)
-{
-    const string ifBase = "if(self.{0}{1} && self.{0}{1}() && self.{0}{1}()!==''){{filters.push(\"{0} {2} {3}\"+ self.{0}{1}() + \"{4}\");}}";
-    const string surround = "'";
-    var prefix = "datetime" + surround;
-    @Html.Raw(string.Format(ifBase, s, ".StartDate", "ge", prefix, surround) + Environment.NewLine)
-    @Html.Raw(string.Format(ifBase, s, ".EndDate", "lt", prefix, surround) + Environment.NewLine)
-}
-<h2>Index</h2>
+
+<h2>Ko ftw!</h2>
+<div data-bind="visible:hasError,text:message" class="error"></div>
+@Html.Partial("UniverseSearch",Model)
 <div data-bind="koGrid: gridOptions" style="min-height: 200px"></div>
-<a href="#" data-bind="click:fetch">Fetch</a>
-<div data-bind="text:message"></div>
-<div data-bind="foreach: items">
-    <div data-bind="text: $data"></div>
+<div>
+<a href="#" data-bind="click:fetch" class="button"><span>Fetch</span></a>    
+</div>
+
+<div>Message:<span data-bind="text:message"></span></div>
+<div><input type="checkbox" data-bind="checked:makeLinkJson" />UseJson</div>
+    
+<table class="bordered">
+    <caption>Urls</caption>
+    <tr><td>Odata Url</td>
+        <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){ AnchorClass = "odatalink", BaseUrl = "odataBase", Href = "uri", Json = "odataJson"})</td></tr>
+    <tr><td>WCF Data services Url</td>
+        <td>@Html.Partial("ODataBoundLink",new ODataBoundLink(){AnchorClass = "wcflink", BaseUrl="wcfDataBase", Href="WcfDataUrl",Json = "wcfJson"})</td></tr>
+</table>
+   
+<div data-bind="text:errorDetail"></div>
+<a href="#" data-bind="click:toggleRaw">Toggle Raw</a>
+<div data-bind="visible:showRaw">
+    Raw Items (no kogrid)
+    <div data-bind="foreach: items">
+        <div>
+            <span data-bind="text: JSON.stringify($data)">:</span><span data-bind="text: $data"></span>
+        </div>
+    </div>
 </div>
 @section scripts
 {
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
     <script src="~/Scripts/koGrid-2.1.1.debug.js"></script>
     <script src="~/Scripts/KoExtensions.js"></script>
+    <script id="odataoverrides">
+        window.filterOverride = {};
+        window.filterOverride.HtmlMap = function(self,filters,buildFilter) {
+            if (!self.HtmlMap())
+                return;
+            var newFilter;
+            switch(self.htmlMapSearchType()) {
+            case 'indexof':
+                newFilter = self.htmlMapSearchType() + '(HtmlMap,\'' + self.HtmlMap() + '\') ge 0';
+                filters.push(newFilter);
+                break;
+            case 'substringof':
+                newFilter =self.htmlMapSearchType() + '(\'' + self.HtmlMap() + '\',HtmlMap) eq true';
+                filters.push(newFilter);
+                break;
+            default :
+                buildFilter('HtmlMap', 'eq', '', "'");
+            }
+            
+        };
+    </script>
+    <script src="~/Scripts/SearchModel.js"></script>
     <script>
-        var url="/OData/Universes"@*&$format=json" not working yet *@
-        var ViewModel = function (url) {
+        var url = "/OData/Universes";
+        
+        var wcfUrl= 'http://localhost:4339/starfleetcommanderservice.svc/Universes';
+        
+        var ViewModel = function (odataUrl,wcfUrl) {
             var ko = window.ko;
             var self = this;
-            self.totalServerItems = ko.observable();
-            self.defaultUri = url+'?';
-            self.message = ko.observable('KO initialized');
-            self.items = ko.observableArray();
-            self.initialized = false;
-            self.pagesize = ko.observable(10);
-            self.page = ko.observable(1);
-            self.sortField = ko.observable('');
-            self.descending = ko.observable(false);
-            self.sortText = ko.computed(function () {
-                if (self.descending()) {
-                    return 'Z..A';
-                }
-                return 'A..Z';
-            });
-            self.filter = ko.computed(function () {
-                var filter = '';
-                var filters = [];
-                var addFilter = '&$filter=';
-                            @* ReSharper disable UnusedLocals *@
-                var buildFilter = function (name,operator, prefix, surround) {
-                                @* ReSharper restore UnusedLocals *@
-                    if (self[name] && self[name]()) {
-                    
-                        var newFilter = name + ' ' + operator + ' ';
-                        if (self[name]() === -1 || self[name]()==="-1") {
-                            if (operator !== "eq")
-                                console.warn('null comparison on != eq');
-                            newFilter+= 'null';
-                        } else {
-                            newFilter+=prefix + surround + self[name]() + surround;
-                        }
-                    
-                        filters.push(newFilter);
-                    }
-                };
-                @foreach (var p in shownOrderedProperties)
-            {
-                var n = p.PropertyName;
-                @: if(window.filterOverride && window.filterOverride.@n){
-                                                                    @: window.filterOverride.@(n)(self,filters);
-                                                @: } else {
-                                                                                    if (isDateRange(p))
-                                                    {// @: is needed for indentation preservation
-            @: @(KoIfDateRange(n))
-                    }
-                                                    else
-                                                    {// @: is needed for indentation preservation
-                    @: buildFilter('@(n)','eq','@(p.ModelType == typeof(DateTime) || p.ModelType == typeof(DateTime?) ? "datetime" : string.Empty)' ,"@Html.Raw(p.ModelType.IsValueType ? string.Empty : "'")");                                                
-                                                                 }
-                 @:}
-            }
-                if (filters.length > 0)
-                    filter = addFilter + filters.join(" and ");
-                return filter;
-            });
-            self.ordering = ko.computed(function () {
-                var order = '';
-                var orderPrefix = "&$orderby=";
-                
-                if (self.sortField() && self.sortField() !== '') {
-                    order += orderPrefix + self.sortField();
-                    if (self.descending())
-                        order += " desc";
-                }
-                return order;
-            });
-            self.sortField.beforeAndAfterSubscribe(function(oldvalue, newvalue) {
-                if (oldvalue != newvalue)
-                    self.fetch();
-            });
-            self.paging = ko.computed(function () {
-                var pagingQuery = "&$top=" + self.pagesize();
-
-                if (self.page() > 1)
-                    pagingQuery += "&$skip=" + ((self.page() - 1) * self.pagesize());
-                pagingQuery+="&$inlinecount=allpages";
-                return pagingQuery;
-            });
-            self.uri = ko.computed(function () {
-                var base = self.defaultUri;
-                //if (self.makeLinkJson())
-                //    base += '&json=true';
-                base += self.filter();
-                base += self.ordering();
-                base+= self.paging();
-                return base;
-            });
-            self.pagingOptions = {
-                currentPage: self.page,                 
-                pageSize:self.pagesize,
-                pageSizes: ko.observableArray([10,2,25]),
-                totalServerItems: self.totalServerItems
-            };
-            self.gridOptions = {
-                data: self.items,
-                enablePaging:true,
-                pagingOptions:self.pagingOptions,
-                afterSelectionChange: function(){return true;}   
-            };
-            self.fetch = function() {
-                $.ajax(self.uri()).success(function (d) {
-                    
-                    self.items.removeAll();
-                    self.items(d.value);
-                    self.totalServerItems(d.count);
-                    if (!self.initialized) {
-                        self.initialized = true;
-                        self.message("initialized");
-                        window.ko.applyBindings(komodel);
-                        self.message("ko bound");
-                    }
-                    
-                });
+            self.showRaw = ko.observable(false);
+            
+            self.columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(shownOrderedProperties.Select(p=>
+                     new { Name = p.PropertyName, ModelType = p.ModelType.ToString(), IsDateRange = isDateRange(p),p.ModelType.IsValueType })));
+            
+            addSearch(ko, self,odataUrl,wcfUrl);
+            addGridOptions(ko, self);
+            self.toggleRaw = function() {
+                self.showRaw(!self.showRaw());
             };
             self.fetch();
         };
-        var komodel = new ViewModel(url);
-        
+        var komodel = new ViewModel(url,wcfUrl);
+        //window.ko.applyBindings(komodel); @*koGrid = fail! *@
     </script>
-   
+
 }

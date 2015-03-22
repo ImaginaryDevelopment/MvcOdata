@@ -1,0 +1,9 @@
+﻿@model OData.Models.ODataBoundLink
+<a href="#" class="@Model.AnchorClass" data-bind="attr:{href:@Model.Href}">
+        <span class="baseurl" data-bind="text:@Model.BaseUrl"></span>
+                              <span class="filtering alternate" data-bind="text:filter"></span>
+                              <span class="ordering" data-bind="text:ordering,css:{alternate:orderingAlternate}"></span>
+                              <span class="paging" data-bind="text:paging,css:{alternate:pagingAlternate}"></span>
+        <span class="json" data-bind="text:@Model.Json,css:{alternate:jsonAlternate}"></span>
+    </a>
+

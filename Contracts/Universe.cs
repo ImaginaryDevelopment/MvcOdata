@@ -11,6 +11,8 @@ namespace Contracts
 			public string ShortName { get; set; }
 			public string LongName { get; set; }
 			public string HtmlMap { get; set; }
+            public DateTime Created { get; set; }
+            public DateTime? Modified { get; set; }
 
     }
     
