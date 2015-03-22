@@ -1,6 +1,8 @@
 ﻿<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE80"#>
 <#@ assembly name="System.Core"#>
 <#@ import namespace="EnvDTE" #>
+
 <#@ import namespace="System.Collections.Generic" #>
 <#
 var hostServiceProvider = (IServiceProvider)Host;
@@ -41,9 +43,79 @@ Project GetProjectContainingT4File(DTE dte,bool keepDirty) {
 			}
 		}
 	}
-
-IEnumerable<ProjectItem> RecurseProjectItems(Project proj)
-{
-return Descendants(proj.ProjectItems.Cast<ProjectItem>(),pi=>pi.ProjectItems.Cast<ProjectItem>());
-}
+	IEnumerable<CodeInterface> FindCodeModelInterfaces(IEnumerable<CodeElement> ces){
+		foreach(var ce in ces)
+		switch(ce.Kind)
+		{
+			case EnvDTE.vsCMElement.vsCMElementInterface:
+					yield return (CodeInterface)ce;
+				break;
+			case EnvDTE.vsCMElement.vsCMElementNamespace:
+				foreach(var elem in FindCodeModelInterfaces((ce as CodeNamespace).Members.Cast<CodeElement>()))
+					yield return elem;
+				break;
+		}
+	}
+	IEnumerable<CodeProperty> FindCodeModelImplementedInterfaceProperties(CodeInterface ci){
+		if(ci.Bases==null)
+			yield break;
+		foreach(var ii in ci.Bases.Cast<CodeInterface>()){
+			foreach(var ip in FindCodeModelProperties(ii))
+				yield return ip;
+			foreach(var iip in FindCodeModelImplementedInterfaceProperties(ii))
+				yield return iip;
+        }
+    }
+    IEnumerable<CodeProperty> FindCodeModelProperties(CodeInterface ci){
+	   foreach(var cp in ci.Members.Cast<CodeElement>().OfType<CodeProperty>()){
+	       yield return cp;
+	   }
+    }
+    IEnumerable<ProjectItem> RecurseProjectItems(Project proj)
+    {
+	   return Descendants(proj.ProjectItems.Cast<ProjectItem>(),pi=>pi.ProjectItems.Cast<ProjectItem>());
+    }
+    IEnumerable<Project> RecurseSolutionProjects(DTE dte){
+	
+    	Projects projects = dte.Solution.Projects;
+    	List<Project> list = new List<Project>();
+    	var item = projects.GetEnumerator();
+    	while (item.MoveNext())
+    	{
+    		var project = item.Current as Project;
+    		if (project == null)
+    		{
+    			continue;
+    		}
+    		if (project.Kind == EnvDTE80.ProjectKinds.vsProjectKindSolutionFolder)
+    		{
+    			list.AddRange(GetSolutionFolderProjects(project));
+    		}
+    		else
+    		{
+    			list.Add(project);
+    		}
+    	}
+        return list;
+    }
+    IEnumerable<Project> GetSolutionFolderProjects(Project solutionFolder)
+    {
+        List<Project> list = new List<Project>();
+        for (var i = 1; i <= solutionFolder.ProjectItems.Count; i++)
+        {
+            var subProject = solutionFolder.ProjectItems.Item(i).SubProject;
+            if (subProject == null)
+            {
+                continue;
+            }
+            // If this is another solution folder, do a recursive call, otherwise add
+            if (subProject.Kind == EnvDTE80.ProjectKinds.vsProjectKindSolutionFolder)
+            {
+                list.AddRange(GetSolutionFolderProjects(subProject));
+            } else {
+                list.Add(subProject);
+            }
+        }
+        return list;
+    }
 #>

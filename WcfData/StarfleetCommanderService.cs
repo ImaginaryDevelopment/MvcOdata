@@ -7,6 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 
 using Contracts;
 using Webby;
+
 namespace WcfData
 {
     [System.ServiceModel.ServiceBehavior(IncludeExceptionDetailInFaults = true)]

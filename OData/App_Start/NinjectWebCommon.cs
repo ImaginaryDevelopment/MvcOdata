@@ -1,5 +1,5 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(OData.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(OData.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(OData.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(OData.App_Start.NinjectWebCommon), "Stop")]
 
 namespace OData.App_Start
 {
@@ -17,9 +17,7 @@ namespace OData.App_Start
 
     using Webby;
 
-    using NinjectDependencyResolver = Ninject.Web.Mvc.NinjectDependencyResolver;
-
-	public static class NinjectWebCommon 
+    public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
@@ -48,13 +46,21 @@ namespace OData.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-            
-            RegisterServices(kernel);
-						GlobalConfiguration.Configuration.DependencyResolver = new NinjectApiResolver(kernel);
-						DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
-            return kernel;
+            try
+            {
+                kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                RegisterServices(kernel);
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectApiResolver(kernel);
+                DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+                return kernel;
+            }
+            catch
+            {
+                kernel.Dispose();
+                throw;
+            }
         }
 
         /// <summary>
@@ -63,13 +69,13 @@ namespace OData.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-					var config=new Config();
-					kernel.Bind(typeof(IWcfProxyFactory<>)).To(typeof(WcfProxyFactory<>));
-			
-					kernel.Bind(typeof(IDataServiceContextFactory<>))
-								 .To(typeof(DataServiceContextFactory<>))
-								 .WithConstructorArgument("uri", new Uri(string.Format(config.ReadAppSetting("DefaultServiceRootUri"),"StarfleetCommanderService.svc/")));
-					kernel.Bind<IStarfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStarfleetCommander>>().GetContext(config));
+            var config = new Config();
+            kernel.Bind(typeof(IWcfProxyFactory<>)).To(typeof(WcfProxyFactory<>));
+
+            kernel.Bind(typeof(IDataServiceContextFactory<>))
+                         .To(typeof(DataServiceContextFactory<>))
+                         .WithConstructorArgument("uri", new Uri(string.Format(config.ReadAppSetting("DefaultServiceRootUri"), "StarfleetCommanderService.svc/")));
+            kernel.Bind<IStarfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStarfleetCommander>>().GetContext(config));
         }        
     }
 }
