@@ -59,8 +59,8 @@ namespace WcfData.App_Start
         private static void RegisterServices(IKernel kernel)
         {
 					kernel.Bind(typeof(Webby.IWcfProxyFactory<>)).To(typeof(Webby.WcfProxyFactory<>));
-	        kernel.Bind<IStarfleetCommander>().To<StarfleetCommanderRepository>();
-	        kernel.Bind<Func<MaslowJax_dbsEntities>>().ToMethod(ctx => () => new MaslowJax_dbsEntities("imaginarydevelopment"));
+	        kernel.Bind<IStarfleetCommander>().To<StarfleetCommandMemoryRepository>(); // for EF use StarfleetCommandRepository
+	        //kernel.Bind<Func<MaslowJax_dbsEntities>>().ToMethod(ctx => () => new MaslowJax_dbsEntities("DefaultConnection"));
 	        ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(kernel));
         }        
     }

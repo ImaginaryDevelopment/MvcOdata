@@ -65,6 +65,7 @@ namespace OData.App_Start
         {
 					var config=new Config();
 					kernel.Bind(typeof(IWcfProxyFactory<>)).To(typeof(WcfProxyFactory<>));
+			
 					kernel.Bind(typeof(IDataServiceContextFactory<>))
 								 .To(typeof(DataServiceContextFactory<>))
 								 .WithConstructorArgument("uri", new Uri(string.Format(config.ReadAppSetting("DefaultServiceRootUri"),"StarfleetCommanderService.svc/")));

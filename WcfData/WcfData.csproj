@@ -214,6 +214,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StarfleetCommanderService.tt</DependentUpon>
     </Compile>
+    <Compile Include="StarfleetCommandMemoryRepository.cs" />
     <Compile Include="Universe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

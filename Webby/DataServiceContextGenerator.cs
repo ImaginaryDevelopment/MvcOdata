@@ -42,7 +42,7 @@ using System.Threading;
         private TypeBuilder CreateTypeBuilder()
         {
             // create type that implements TInterface
-            const TypeAttributes TypeAttributes =
+            TypeAttributes TypeAttributes =
                 TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit
                 | TypeAttributes.AutoLayout;
 
