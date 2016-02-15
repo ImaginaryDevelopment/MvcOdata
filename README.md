@@ -1,4 +1,4 @@
-MvcOdata
+MvcOdata [![Build status](https://ci.appveyor.com/api/projects/status/uw1t01dfyafu42fe?svg=true)](https://ci.appveyor.com/project/ImaginaryDevelopment/mvcodata)
 ========
 
 a repo for a PoC and experimentation around using [OData Controllers](http://www.asp.net/web-api/overview/odata-support-in-aspnet-web-api) and [WCF Data services](http://msdn.microsoft.com/en-us/data/odata.aspx)
