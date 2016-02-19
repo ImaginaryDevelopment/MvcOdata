@@ -69,13 +69,14 @@
                     }
 
                     TypeMap.Add(typeString, result.Type);
+                    return result.Type;
                 }
                 else
                 {
                     serviceType = TypeMap[typeString];
+                    return serviceType;
                 }
 
-                return serviceType;
             }
         }
 
