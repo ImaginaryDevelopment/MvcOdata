@@ -7,6 +7,7 @@ namespace OData
 {
     using System.Web.Http.OData.Builder;
     using System.Web.Routing;
+    using System.Web.Http.OData.Extensions;
 
     using OdataGenerator;
 
@@ -22,7 +23,11 @@ namespace OData
             ODataConventionModelBuilderEnabler.WireModels(modelBuilder);
 
             var model = modelBuilder.GetEdmModel();
-            config.Routes.MapODataRoute("OData", "OData", model);
+            //config.MapODataServiceRoute()
+            //System.Web.Http.OData.Extensions.HttpRouteCollectionExtensions.MapODataServiceRoute()
+            config.Routes.MapODataServiceRoute("OData", "OData", model);
+            
+            //System.Web.OData.
             var odataRoute = RouteTable.Routes["OData"] as Route;
 
             config.Routes.MapHttpRoute(DefaultODataRoute, "OData/{controller}/{id}", new { id = RouteParameter.Optional });
