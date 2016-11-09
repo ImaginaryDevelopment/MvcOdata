@@ -1,4 +1,5 @@
 ﻿@using OData.Models
+@using OData.Mvc
 @using OData.Controllers.OData
 @model UniverseSearchModel
 @{
@@ -14,8 +15,22 @@
                             ModelType = UniversesController.ModelType,
                             FilterMetadata = ViewData.ModelMetadata.GetFormGroups(new ViewDataDictionary(Model.SearchForm)).SelectMany(a => a.Select(b => b)).OrderBy(a => a.PropertyName).ToArray()
                         };
-    
+    ViewBag.RowTemplate = Html.Partial("/Views/Universe/Row.cshtml", new ViewDataDictionary());
 }
-
 <h2>KoSearchView</h2>
+<h4 class="error">@ViewBag.Error</h4>
+<div class="content-wrapper">
+    <a href="@Url.Action("create")" class="button right">Add New Universe</a>
+    @Html.Partial("/Views/Shared/kosearch/_SearchFormKO.cshtml", Model.SearchForm)
+    @Html.Partial("/Views/Shared/kosearch/_SearchGridKO.cshtml", Model)
+</div>
+<div id="DetailHolder"></div>
+
+@section Scripts
+{
+    @* 
+        @Scripts.Render("~/Scripts/ViewScripts/Universe/index.js")
+    *@
+    @Html.Partial("/Views/Shared/kosearch/_SearchGridScripts.cshtml", koGridModel)
+}
 

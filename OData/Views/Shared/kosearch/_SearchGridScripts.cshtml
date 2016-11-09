@@ -1,0 +1,49 @@
+﻿@using OData
+@using OData.Models
+@using OData.Mvc
+@model KoGridModel
+@{
+
+    ViewBag.OdataSegment = Model.OdataSegment ?? ViewBag.OdataSegment;
+
+    Model.Specs = (Model.Specs ?? Enumerable.Empty<string>());
+    //.Concat(new[]
+    //        {
+    //            Links.Scripts.jasmine.specs.jasmine_pages_js,
+    //            Links.Scripts.jasmine.specs.jasmine_inputs_js,
+    //            Links.Scripts.jasmine.specs.searchgrid.jasmine_searchgrids_js
+    //        });
+}
+
+<script>
+    var primaryKey = "@Model.PrimaryKey";
+    var groupActionKey = "@Model.GroupActionKey";
+    var appBase = '@Url.Content("~/")';
+</script>
+@Url.ScriptResource(Links.Scripts.KO.Knockout) 
+@Url.ScriptResource(Links.Scripts.KO.knockout_extensions_js) 
+@Url.ScriptResource("~/Scripts/yepnope.1.5.4.js") @*Links.Scripts.yepnope_1_5_4_js) *@
+@Model.BeforeKoScript
+@Html.Partial(OData.MvcT4.Views.Shared.KOSearch.KoContext, Model) 
+@*@Scripts.Render("~/bundles/jasminerunner")*@
+
+<script id="searchgridscripts">
+    var specs = [ @Html.Raw(Model.Specs.Any()? Model.Specs.Select(s=>"'"+s+"'").Aggregate((s1,s2)=>s1+","+s2): String.Empty)];
+    @if (Model.ModelType != null)
+    {
+        @: var modelPropertyNames= @Html.Json(Model.ModelType.GetProperties().Select(p => p.Name));    
+        @: var sample={}; for(var i in modelPropertyNames) { sample[modelPropertyNames[i]]='';}
+
+    }
+    @*var jasminecss = '@Url.Content(Links.Content.jasmine_css)'; 
+    if (window.startjasmine) {
+        startjasmine.defaults = function () {
+            startjasmine(appBase, jasminecss, specs, function () {
+                @foreach (var s in Model.Specs.Select(System.IO.Path.GetFileNameWithoutExtension))
+                {
+                    @(s + "();")
+                }
+            });
+        };
+    }*@
+</script>

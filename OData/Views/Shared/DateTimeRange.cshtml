@@ -1,0 +1,6 @@
+﻿@model DateTime?
+<div class="date-range">
+    <input name="@ViewData.TemplateInfo.GetFullHtmlFieldName("StartDate")" class="date-picker date-range-from" type="date" placeholder="YYYY-MM-DD" />
+    <span class="date-range-to-label">to</span>
+    <input name="@ViewData.TemplateInfo.GetFullHtmlFieldName("EndDate")" class="date-picker date-range-to" type="date" placeholder="YYYY-MM-DD" />
+</div>

@@ -135,7 +135,7 @@
     });
 
     self.fetch = function () {
-        $.ajax(self.uri()).success(function (d) {
+        $.ajax(self.uri()).done(function (d) {
             self.hasError(false);
             self.message('fetched');
             self.items.removeAll();
@@ -148,7 +148,7 @@
                 self.message("ko bound");
             }
 
-        }).error(function (error, status, jqXhr) {
+        }).fail(function (error, status, jqXhr) {
             self.message('query failed:' + status); //":"+JSON.stringify(error));
             self.hasError(true);
         });

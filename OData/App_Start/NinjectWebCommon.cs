@@ -16,21 +16,44 @@ namespace OData.App_Start
     using Ninject.Web.Common;
 
     using Webby;
+    public static class ExpectedServices
+    {
+        public static class String
+        {
+            public const string CssEndpoint = nameof(CssEndpoint);
+            public const string JavaScriptEndpoint = nameof(JavaScriptEndpoint);
+        }
 
-    public static class NinjectWebCommon 
+        public static class Func
+        {
+            public static class String
+            {
+                public static class ReturnsString
+                {
+                    public const string MarkdownTransformer = nameof(MarkdownTransformer);
+                    public const string GetFullImagePath = nameof(GetFullImagePath);
+                    public const string GetFullScriptPath = nameof(GetFullScriptPath);
+                    public const string GetSecuredScript = nameof(GetSecuredScript);
+                    public const string Translate = nameof(Translate);
+                }
+            }
+        }
+    }
+
+    public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
-        
+
         /// <summary>
         /// Stops the application.
         /// </summary>
@@ -38,7 +61,7 @@ namespace OData.App_Start
         {
             bootstrapper.ShutDown();
         }
-        
+
         /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
@@ -76,6 +99,6 @@ namespace OData.App_Start
                          .To(typeof(DataServiceContextFactory<>))
                          .WithConstructorArgument("uri", new Uri(string.Format(config.ReadAppSetting("DefaultServiceRootUri"), "StarfleetCommanderService.svc/")));
             kernel.Bind<IStarfleetCommander>().ToMethod(c => c.Kernel.Get<IDataServiceContextFactory<IStarfleetCommander>>().GetContext(config));
-        }        
+        }
     }
 }

@@ -1,0 +1,21 @@
+﻿@using System
+<div class="t-reset t-pager-wrapper">
+    <div class="pager t-pager">
+        <a rel="first-page" class="pager-first t-link" href="#"><span class="t-icon t-arrow-first" data-bind="click:$root.gofirst,clickBubble:false">
+                                                                    first</span> </a><a rel="prev-page" class="pager-prev t-link" href="#" data-bind="click:$root.previous,clickBubble:false"><span class="t-icon t-arrow-prev">
+                                                                                                                                                                                            prev</span> </a>
+        <div class="t-page-i-of-n">
+            Page
+            <input name="CurrentPage" class="current-page" type="text" value="1" data-bind="value:$root.page,valueUpdate:'afterkeydown',event:{change:$root.fetch}" />
+            of <span class="total-pages" data-bind="text: resultModel.safe().totalPages">0</span></div>
+        <a rel="next-page" class="pager-next t-link" href="#" data-bind="click:$root.next,clickBubble:false">
+            <span class="t-icon t-arrow-next">
+                next</span> </a>
+        <a rel="last-page" class="pager-last t-link" href="#"  data-bind="click:$root.golast,clickBubble:false">
+            <span class="t-icon t-arrow-last">last</span> 
+        </a><span class="grid-loading" data-bind="style:{display:loading()?'inline':'none'}">Loading...<span class="loader"></span></span>
+    </div>
+    <div class="pager-status t-status-text">
+        Displaying items <span class="first-index" data-bind="text:resultModel.safe().startIndex">0</span> - <span class="last-index" data-bind="text:resultModel.safe().lastIndex">0</span>
+        of <span class="total-count" data-bind="text:resultModel.safe().totalCount">0</span>.</div>
+</div>

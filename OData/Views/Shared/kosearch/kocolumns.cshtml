@@ -1,0 +1,25 @@
+﻿@model ModelMetadata[]
+@{
+    
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType == typeof(OData.Models.DateRange) || m.TemplateHint == "~/Views/Shared/DateTimeRange.cshtml";//@MVC.Shared.Views.EditorTemplates.DateTimeRange;
+}
+<script id="kocolumns">
+var KoColumns=function(self){ 
+self.columns = ko.observableArray([@Html.Raw(Model.Select(m => "'" + m.PropertyName + "'").Aggregate((s1, s2) => s1 + "," + s2))]);
+        @foreach (var p in Model)
+        {
+            if (isDateRange(p))
+            {
+        @: self.@(p.PropertyName) = {};
+                @: self.@(p.PropertyName).StartDate = ko.observable();
+                @: self.@(p.PropertyName).EndDate = ko.observable();
+            }
+            else
+            {
+        @: self.@(p.PropertyName) = ko.observable();     
+            }
+
+
+        }
+};
+</script>

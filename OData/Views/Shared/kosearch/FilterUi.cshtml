@@ -1,0 +1,158 @@
+﻿@model ModelMetadata[]
+@{
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType == typeof(OData.Models.DateRange) || m.TemplateHint == "~/Views/Shared/DateTimeRange.cshtml";//@MVC.Shared.Views.EditorTemplates.DateTimeRange;
+}
+@helper KoIfUiDateRange(string s, string display)
+{
+    const string ifBase = "if(self.{0}() && self.{0}()!==''){{filters.push({{text:\"{1} : \" + (self.{0}Display? self.{0}Display():self.{0}()),name:'{0}',remove:function(){{self.{0}(''); self.fetch();if(self.filterUi().length==0){{self.displaySearch(true);}}}}}});}}";
+    @Html.Raw(string.Format(ifBase, s + ".StartDate", display + ">=") + Environment.NewLine)
+    @Html.Raw(string.Format(ifBase, s + ".EndDate", display + "<") + Environment.NewLine)
+}
+<script id="setfilterui">
+var SetFilterUi=function(self){
+self.setFilterUi = function() {
+    var filters = [];
+    var filterUiDateCheck=function(baseName,ui){
+        if (!self[baseName])
+            return;
+        var start =ko.utils. unwrapObservable(self[baseName].StartDate);
+        var end = ko.utils.unwrapObservable(self[baseName].EndDate);
+        if (start && end && start === end) {
+            // show date = X instead of 2 tags
+            filters.push({
+                text: ui + ":" + self[baseName].StartDate(),
+                name: baseName,
+                remove: function () {
+                    self[baseName].StartDate('');
+                    self[baseName].EndDate('');
+                    self.fetch();
+                    if (self.filterUi().length == 0) {
+                        self.displaySearch(true);
+                    }
+                }
+            });
+            return;
+        }
+        if (start && end) {
+            filters.push({
+                text: ui + ": between " + self[baseName].StartDate()+" and "+self[baseName].EndDate(),
+                name: baseName,
+                remove: function () {
+                    self[baseName].StartDate('');
+                    self[baseName].EndDate('');
+                    self.fetch();
+                    if (self.filterUi().length == 0) {
+                        self.displaySearch(true);
+                    }
+                }
+            });
+            return;
+        }
+        if (start) {
+            filters.push({
+                text: ui + " > " + self[baseName].StartDate(),
+                name: baseName+'.StartDate',
+                remove: function () {
+                    self[baseName].StartDate('');
+                    self.fetch();
+                    if (self.filterUi().length == 0) {
+                        self.displaySearch(true);
+                    }
+                }
+            });
+        }
+        if (end) {
+            filters.push({
+                text: ui + " < " + self[baseName].EndDate(),
+                name: baseName + '.EndDate',
+                remove: function () {
+                    self[baseName].EndDate('');
+                    self.fetch();
+                    if (self.filterUi().length == 0) {
+                        self.displaySearch(true);
+                    }
+                }
+            });
+        }
+    };
+            @* ReSharper disable UnusedLocals *@
+    var filterUiCheck = function (name, ui) {
+            @* ReSharper restore UnusedLocals *@
+                if(self[name]()) {
+                    var displayProperty = name + 'Display';
+                    var value =  self[name]();
+                    if (value instanceof Array) {
+                        var orFilters = [];
+                        for (var i in value) {
+                            var x = value[i];
+                            if (x && x !== "All") {
+                                if (self.resultModel() && self.resultModel().itemSources) {
+                                    orFilters.push(self.resultModel().itemSources(name, x));
+                                } else {
+                                    orFilters.push(x);
+                                }
+                            }
+                        }
+                        if (orFilters.length > 0) {
+                            if (orFilters.length > 1) {
+                                filters.push({
+                                    text: ui + '(' + orFilters.join(', ') + ')',
+                                    name: name,
+                                    remove: function () {
+                                        self[name]('');
+                                        self.fetch();
+                                        if (self.filterUi().length == 0) {
+                                            self.displaySearch(true);
+                                        }
+                                    }
+                                });
+                            } else {
+                                filters.push({
+                                    text: ui +':'+ orFilters[0], name: name, remove: function () {
+                                        self[name]('');
+                                        self.fetch();
+                                        if (self.filterUi().length == 0) {
+                                            self.displaySearch(true);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        return;
+                    } 
+                    filters.push({text:ui+':'+(self[displayProperty]? self[displayProperty]():self[name]()),
+                        name:name,
+                        remove:function() {
+                            self[name]('');
+                            self.fetch();
+                            if (self.filterUi().length == 0) {
+                                self.displaySearch(true);
+                            }
+                        }});
+                }
+            };
+            @foreach (var p in Model)
+            {
+                var displayName = p.GetDisplayName();
+                var n = p.PropertyName;
+                @: if(window.filterOverride && window.filterOverride.@(n)Display){
+                                @: window.filterOverride.@(n)Display(self,filters,'@displayName');
+                                @: } else {
+                                                if (isDateRange(p))
+                                                {
+                                                    @: filterUiDateCheck('@(n)', '@displayName');
+                                                    
+                   
+                }
+                                                else
+                                                {
+                    @: filterUiCheck('@n','@displayName');      
+                                }
+            @: }
+            }
+            self.filterUi.removeAll();
+            self.filterUi(filters);
+        };
+        self.filterUi = ko.observableArray([]);
+};
+</script>

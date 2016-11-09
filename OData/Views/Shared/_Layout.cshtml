@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using OData
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,12 +8,13 @@
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" type="text/css" href="~/Content/KoGrid.css"/>
     @Scripts.Render("~/bundles/modernizr")
-    
 </head>
 <body>
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render(Links.Bundles.Scripts.jqueryui)
+    @Scripts.Render(Links.Bundles.Scripts.knockout)
     @RenderSection("scripts", required: false)
 </body>
 </html>

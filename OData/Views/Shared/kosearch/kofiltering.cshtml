@@ -1,0 +1,79 @@
+﻿@model ModelMetadata[]
+@{
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType == typeof(OData.Models.DateRange) || m.TemplateHint == "~/Views/Shared/DateTimeRange.cshtml";//@MVC.Shared.Views.EditorTemplates.DateTimeRange;
+}
+@helper KoIfDateRange(string s)
+{
+    const string ifBase = "if(self.{0}{1} && self.{0}{1}() && self.{0}{1}()!==''){{filters.push(\"{0} {2} {3}\"+ self.{0}{1}() + \"{4}\");}}";
+    const string surround = "'";
+    var prefix = "datetime" + surround;
+    @Html.Raw(string.Format(ifBase, s, ".StartDate", "ge", prefix, surround) + Environment.NewLine)
+    @Html.Raw(string.Format(ifBase, s, ".EndDate", "lt", prefix, surround) + Environment.NewLine)
+}
+<script id="kofiltering">
+    var KoFiltering=function(self){
+    self.filter = ko.computed(function () {
+        var filter = '';
+        var filters = [];
+        var addFilter = '&$filter=';
+            @* ReSharper disable UnusedLocals *@
+        var buildFilter = function (name,operator, prefix, surround,transform) {
+            @* ReSharper restore UnusedLocals *@
+            if (self[name] &&   ko.utils.unwrapObservable(self[name])) {
+                var value=ko.utils.unwrapObservable(self[name]);
+                var newFilter = name + ' ' + operator + ' ';
+                if( value instanceof Array){
+                    var orFilters=[];
+                    for(var i in value){
+                        var x=value[i];
+                        if(x && x!=="All")
+                            orFilters.push(newFilter+prefix+surround+x+surround);
+                    }
+                    if(orFilters.length>0){
+                        if(orFilters.length>1){
+                            filters.push('('+orFilters.join(' or ')+')');
+                        } else {
+                            filters.push(orFilters[0]);
+                        }
+                    }
+                    return;
+                }
+                    if (value === -1 || value==="-1") {
+                        if (operator !== "eq")
+                            console.warn('null comparison on != eq');
+                        newFilter+= 'null';
+                    } else {
+                        if (!transform) {
+                            newFilter += prefix + surround + value + surround;
+                        } else {
+                            newFilter += prefix + surround + transform(value) + surround;
+                        }
+                    }
+                    
+                    filters.push(newFilter);
+                }
+            };
+            @foreach (var p in Model)
+            {
+                var n = p.PropertyName;
+                @: if(window.filterOverride && window.filterOverride['@n']){
+                                @:  window.filterOverride['@(n)'](self, filters, buildFilter);
+                @: } else {
+                if (isDateRange(p)){// @: is needed for indentation preservation
+                   var startText= "StartDate";
+                    var endText= "EndDate";
+                   @: if(self.@(n).@(startText) && self.@(n).@(startText)())
+                   @: buildFilter('@(n)','ge','datetime','\'',function(value){return value.StartDate();});
+                   @: if(self.@(n).@(endText) && self.@(n).@(endText)())
+                   @: buildFilter('@(n)', 'lt', 'datetime', '\'', function (value) { return value.EndDate() + "T23:59:59"; });
+                    } else {// @: is needed for indentation preservation
+                    @: buildFilter('@(n)', 'eq', '@(p.ModelType == typeof(DateTime) || p.ModelType == typeof(DateTime?) ? "datetime" : string.Empty)', "@Html.Raw(p.ModelType.IsValueType ? string.Empty : "'")");                                                
+                                                                 }
+                 @: }
+            }
+        if (filters.length > 0)
+            filter = addFilter + filters.join(" and ");
+        return filter;
+        });
+        };
+</script>

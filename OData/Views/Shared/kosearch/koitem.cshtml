@@ -1,0 +1,106 @@
+﻿@using OData.Models
+@model KoGridModel
+@{
+    ViewBag.Title = "koitem";
+    var controllerTarget = ViewBag.OdataSegment != null ? ViewBag.OdataSegment.ToString() : null;
+    var targetUri = controllerTarget != null ? Url.RouteUrl(new { area = "Data", controller = controllerTarget }) : string.Empty;
+}
+<script id="koitem">
+    if (!window.primaryKey) {
+        console.warn('KoContext: no primary key set');
+    }
+ 
+    var uri = '@targetUri';
+    if (!window.uri) {
+        console.warn('KoContext no uri (check odata segment)');
+    }
+    var UserSearchResultModel=function(items,totalCount,searchModel){
+        var self = this;
+        @{
+            var itemSources = (IEnumerable<ItemSource>)ViewBag.ItemSources;
+            if (itemSources != null)
+            {
+
+
+                @: self.itemSources= function(type, id){
+                foreach (var i in itemSources.Where(i => string.IsNullOrEmpty(i.Id) == false))
+                {
+                    @: if (type === '@i.Type' && id== '@i.Id') return '@i.Name';
+                }
+                @: return id;
+                                        @: }
+            }
+        }
+        function mixin(arr) {
+            var modelSelected = searchModel.selected();
+            ko.utils.arrayForEach(arr, function(item) {
+                if (window.mixin) {
+                    window.mixin(item,self.itemSources);
+                }
+                var myselected = ko.observable(false);
+                if (ko.utils.arrayFirst(modelSelected, function(mItem) {
+                    return mItem == item[window.primaryKey];
+                })) {
+                    myselected(true);
+                }
+                for (var p in item) {
+                    if (p.indexOf('Id', p.length - 2) !== -1) {
+                        var noId = p.substr(0, p.length - 2);
+                        item[noId + "Display"] = self.itemSources(noId,item[p]);    
+                    }
+                    
+                }
+                item.selected = ko.computed({
+                    read: function() {
+                        return myselected() || searchModel.selectAllQueryChecked();
+                    },
+                    write: function(value) {
+                        myselected(value);
+                        var exists = ko.utils.arrayFirst(searchModel.selected(), function(aItem) {
+                            return item[window.primaryKey] == aItem;
+                        });
+                        if (value) {
+                            //push
+                            if (exists)
+                                return;
+                            searchModel.selected.push(item[window.primaryKey]);
+                        } else {
+                            //remove
+                            if(exists) searchModel.selected.remove(exists);
+                        }
+                    }
+                });
+            });
+            return arr;
+        }
+        self.matches = mixin(items);
+        self.selected = ko.computed(function() { 
+           
+            return ko.utils.arrayFilter(self.matches, function(item) {
+                return item.selected();
+            });
+        });
+      
+        self.selectAllChecked = ko.observable(false); //select all on page
+        self.selectAll = function() {
+            ko.utils.arrayForEach(self.matches, function(item) {
+                item.selected(!self.selectAllChecked());
+            });
+            self.selectAllChecked(!self.selectAllChecked());
+            return true;
+        };
+        self.totalCount = totalCount;
+        self.page = searchModel.page();
+        self.pagesize = searchModel.pagesize();    
+    
+        self.displayCount =self.matches? self.matches.length: 0;
+
+        self.pageIndex = self.page - 1;
+
+        self.startIndex = totalCount != 0 ? self.pageIndex * self.pagesize + 1 : 0;
+
+        self.lastIndex = totalCount != 0 ? self.startIndex + self.displayCount - 1 : 0;
+
+        self.totalPages = Math.ceil(self.totalCount / self.pagesize);
+    };
+</script>

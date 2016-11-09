@@ -1,0 +1,107 @@
+﻿@using System
+@using OData.Models
+@using OData.Mvc
+@{
+    Html.EnableClientValidation();
+
+    var groups = ViewData.ModelMetadata.GetFormGroups(ViewData);
+
+    var groupCount = groups.Count();
+    var groupNumber = 0;
+
+    var renderSaveButton = ViewData.ModelMetadata.AdditionalValues.Keys.Contains("Saveable") && (bool)ViewData.ModelMetadata.AdditionalValues["Saveable"];
+
+    var cssClass = ViewData.ModelMetadata.GetAdditionalValue<string, PropertyGroupContainerDescriptor>("PropertyGroupContainerDescriptor", x => x.HtmlClass, "one-column");
+
+    var templateOverride = ViewData["TemplateOverride"];
+}
+@helper SearchClearSaveButtons(bool renderSaveButton){
+     <div class="button-wrap">
+                                    <a href="#" class="search t-button" data-bind="click:search" id="searchSubmit">Search</a> <a href="@Url.Action("Index")" class="clearsearch t-button">
+                                                                                                         Clear</a>
+                                    @if (renderSaveButton)
+                                    {
+                                        <a href="@Url.Action("Create", "Report")" class="save t-button" data-model="@ViewData.ModelMetadata.ModelType.FullName, ProviderPortal">
+                                            Save</a>
+                                    }
+                                </div>
+}
+<div class="searchform search-wrap @cssClass">
+    @Html.ValidationSummary(false)
+    <div>
+        <img class="search-img" src="@Url.Content("~/Content/_img/search-icons/")@(ViewContext.RouteData.Values["Controller"]).png"/>   
+        <div class="additional-search-info pull-left"></div>
+    </div>
+    <h3 class="search-title">@ViewBag.SearchTitle<div class="search-description"></div> </h3>
+    <div class="search-description">@ViewBag.SearchDescription</div>
+    <div class="search-criteria" data-bind="foreach:filterUi">
+        <a rel="" data-bind="click:remove,attr:{rel:name}" title="Delete">
+        <span>Delete</span><!-- ko text: text --><!-- /ko --></a>
+    </div>
+    <a rel="toggle-search-controls" data-bind="click:toggleSearch, css:{ 'icon-toggle-up':displaySearch,'icon-toggle-down':!displaySearch()}" class="button toggle-search-controls icon-toggle-up"
+       title="Toggle search controls"><span>Hide Search</span></a>
+    <div class="search-controls @cssClass" data-bind="visible: displaySearch">
+        @{
+            using (Html.BeginForm())
+            {
+                if (templateOverride != null)
+                {
+                    @Html.Raw(templateOverride)
+
+                    @SearchClearSaveButtons(renderSaveButton)
+                }
+                else
+                {
+                    foreach (var group in groups)
+                    {
+                        <div class="@(group.Key ?? "first")">
+                            @foreach (var item in group)
+                            {
+                                
+                                if (item.AdditionalValues.ContainsKey("assurance"))
+                                {
+                                    <span class="assurance">
+                                        @Html.FormLabel(item.PropertyName, item.DisplayName, item.Description)
+                                        @Html.Editor(item.PropertyName)
+                                    </span>
+                                }
+                                if (item.AdditionalValues.ContainsKey("LabelBeside"))
+                                {
+                                    <table><tbody><tr>
+                                                      <td>@Html.FormLabel(item.PropertyName, item.DisplayName, item.Description)</td><td></td>
+                                                      <td>@Html.FormLabel(item.PropertyName,(item.AdditionalValues["LabelBeside"]?? item.DisplayName).ToString(), item.Description)</td>
+                                                  </tr>
+                                               <tr>
+                                                   <td>@Html.Editor(item.PropertyName)</td>
+                                                   <td>or</td>
+                                                   <td>
+                                                       @if (item.AdditionalValues.ContainsKey("InputBeside"))
+                                                       {
+                                                       @Html.Partial(item.AdditionalValues["InputBeside"].ToString(),item)
+                                                       }
+                                                   </td>
+                                                   
+                                               </tr>
+                                           </tbody></table>
+                                }
+                                else
+                                {
+                                    @Html.FormLabel(item.PropertyName, item.DisplayName, item.Description)
+                                    @Html.Editor(item.PropertyName)
+                                }
+                            }
+                            @if (groupCount == ++groupNumber)
+                            {
+                                @SearchClearSaveButtons(renderSaveButton)
+                            }
+                        </div>
+                    }
+                }
+                <div class="clear">
+                </div>
+            }
+        }
+    </div>
+    <div class="clear">
+        &nbsp;</div>
+</div>

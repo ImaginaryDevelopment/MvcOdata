@@ -1,0 +1,119 @@
+﻿@using OData
+@model OData.Models.KoGridModel
+@* ReSharper disable RedundantUsingDirective *@
+@using Inflector
+@* ReSharper restore RedundantUsingDirective *@
+
+@{
+
+    var properties = Model.FilterMetadata;
+    var shownOrderedProperties = properties.ToArray();
+    Func<ModelMetadata, bool> isDateRange = m => m.ModelType == typeof(OData.Models.DateRange) || m.TemplateHint == "~/Views/Shared/DateTimeRange.cshtml";//@MVC.Shared.Views.EditorTemplates.DateTimeRange;
+
+}
+@* Complex Razor Delegates - http://www.prideparrot.com/blog/archive/2012/9/simplifying_html_generation_using_razor_templates *@
+@helper KoIf(string s, bool isValueType, bool isDateTime)
+{
+    const string ifBase = "if(self.{0} && self.{0}() && self.{0}()!==''){{filters.push(\"{0} eq {1}\"+ self.{0}() + \"{2}\");}}";
+    var surround = isValueType && !isDateTime ? string.Empty : "'";
+    var prefix = (isDateTime ? "datetime" : string.Empty) + surround;
+    @Html.Raw(string.Format(ifBase, s, prefix, surround) + Environment.NewLine)
+}
+@* ui helpers are for what shows up in the tag search cloud*@
+
+@Html.Partial(MvcT4.Views.Shared.KOSearch.KOItem, Model)
+@Html.Partial(MvcT4.Views.Shared.KOSearch.FilterUi, shownOrderedProperties)
+@Scripts.Render(Links.Scripts.KO.kosearch_js)
+@Html.Partial(MvcT4.Views.Shared.KOSearch.GroupActions,Model.SearchModel)
+@Html.Partial(MvcT4.Views.Shared.KOSearch.KOColumns,shownOrderedProperties)
+@Html.Partial(MvcT4.Views.Shared.KOSearch.KOFiltering,shownOrderedProperties)
+<script id="kosearchgrid">
+    // outer search model
+    jQuery.ajaxSettings.traditional = true;
+    var Model = function (updateImmediate, uri) {
+        var self = this;
+        KoSearchModel(self,uri);
+        KoColumns(self);
+       
+        self.loadData = function (data, status, jqXHR) {
+                
+            self.resultModel(new UserSearchResultModel(data.value, data['odata.count'], self));
+            self.loading(false);
+        };
+        SetFilterUi(self);
+    
+        KoFiltering(self);
+        KoSearchPaging(self,updateImmediate);
+        
+        KoGroupActions(self.selected,self.exportQueryUri,self.selectAllQueryChecked,self.selectedCount, self);
+       
+        //AdditionalKoModelCode
+        if (window.additionalKoCode) {
+            window.additionalKoCode(self);
+        }
+       
+    };
+    
+   
+    var komodel=new Model(true, uri);
+    $(function () { @* ReSharper disable UnusedLocals *@
+        var bindInputs = function (pName) { @* ReSharper restore UnusedLocals *@
+            $('input[name='+pName+'].checkboxList').not('[data-bind]').each(function(i,e){
+                var $e=$(e);
+                var val = $e.is(':checked');
+                komodel[pName](val);
+                $e.attr('data-bind','checked:'+pName+$e.val());
+            });
+            $('input#'+pName).each(function (i,e) {
+                var val = $(e).val();
+               
+                if (val && ($(e).attr('type')!="number" || val!=0)) {
+                    komodel[pName](val);    
+                }
+                $(e).attr('data-bind','value: '+pName+',displayText: '+pName);
+            });
+            $('select#' + pName+'[multiple]').not('[data-bind]').each(function (i, e) {
+                var val = $(e).val();
+                if (val) {
+                    komodel[pName](val);
+                }
+                $(e).attr('data-bind', 'selectedOptions: ' + pName + ',displayText:' + pName + 'Display');
+                komodel[pName + 'Display'] = ko.observable();
+            });
+            $('select#'+pName).not('[data-bind]').not('[multiple]').each(function(i,e) {
+                var val = $(e).val();
+                if (val) {
+                    komodel[pName](val);
+                }
+                $(e).attr('data-bind','value: '+pName+',displayText:'+pName+'Display');
+                komodel[pName+'Display']=ko.observable();
+            });
+        };
+        // bring data bindings to search form if any are missing them, for instance any input or select that uses Html.EditorFor
+        @foreach (var p in shownOrderedProperties)
+        {
+            if (isDateRange(p))
+            {
+                @: $('input[name="@(p.PropertyName).StartDate"]').not('[data-bind]').attr('data-bind','value: @(p.PropertyName).StartDate');
+                                @: $('input[name="@(p.PropertyName).EndDate"]').not('[data-bind]').attr('data-bind','value: @(p.PropertyName).EndDate');
+            }
+            else
+            {
+                @: bindInputs('@p.PropertyName');
+            }
+
+        }
+        if (window.KoBeforeBinding) {
+            KoBeforeBinding(komodel);
+        }
+        ko.applyBindings(komodel);
+        //valid datetime filter /User?&json=true&$filter=LastLoginDate+gt+datetime'2012-01-01'
+        var dt = $('input[data-type="System.Nullable`1[System.DateTime]"],input[data-type="System.DateTime"],input.date-picker,input[type="datetime"]');
+        if (dt[0]) {
+            dt.datepicker({ dateFormat: "yy-mm-dd" });
+        }
+        
+    });
+
+</script>
+

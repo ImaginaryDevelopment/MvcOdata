@@ -192,9 +192,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DateRange.cs" />
+    <Compile Include="Models\HtmlHelperExtensions.cs" />
     <Compile Include="Models\KoGridModel.cs" />
+    <Compile Include="Models\MVC.cs" />
     <Compile Include="Models\MvcExtensions.cs" />
     <Compile Include="Models\ODataBoundLink.cs" />
+    <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\UniverseSearchModel.cs" />
     <Compile Include="NinjectApiResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,10 +260,16 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\KoExtensions.js" />
-    <Content Include="Scripts\koGrid-2.1.1.debug.js" />
+    <Content Include="Scripts\ko\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\ko\knockout-3.4.0.js" />
+    <Content Include="Scripts\ko\knockout-extensions.js" />
+    <Content Include="Scripts\ko\KoExtensions.js" />
+    <Content Include="Scripts\ko\koGrid-2.1.1.debug.js" />
+    <Content Include="Scripts\ko\kosearch.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\SearchModel.js" />
+    <Content Include="Scripts\yepnope.1.5.4-min.js" />
+    <Content Include="Scripts\yepnope.1.5.4.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -280,6 +290,17 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Home\KoSearch.cshtml" />
     <Content Include="Views\Universe\Row.cshtml" />
+    <Content Include="Views\Shared\kosearch\FilterUi.cshtml" />
+    <Content Include="Views\Shared\kosearch\GroupActions.cshtml" />
+    <Content Include="Views\Shared\kosearch\kocolumns.cshtml" />
+    <Content Include="Views\Shared\kosearch\KoContext.cshtml" />
+    <Content Include="Views\Shared\kosearch\kofiltering.cshtml" />
+    <Content Include="Views\Shared\kosearch\koitem.cshtml" />
+    <Content Include="Views\Shared\kosearch\_SearchFormKO.cshtml" />
+    <Content Include="Views\Shared\kosearch\_SearchGridKO.cshtml" />
+    <Content Include="Views\Shared\kosearch\_SearchGridNavKO.cshtml" />
+    <Content Include="Views\Shared\kosearch\_SearchGridScripts.cshtml" />
+    <Content Include="Views\Shared\DateTimeRange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

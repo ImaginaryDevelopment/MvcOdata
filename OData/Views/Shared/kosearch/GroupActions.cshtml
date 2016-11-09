@@ -1,0 +1,42 @@
+﻿@model OData.Models.SearchModel
+@using Inflector  
+<script id="kosearchgroupactions">
+
+    var KoGroupActions = function (selected,exportQueryUri,selectAllQueryChecked,selectedCount, self) {
+        @if (Model.GroupActions != null && Model.GroupActions.Count > 0)
+        {
+            @: //group actions
+        <text>
+        var buildGroupAction = function (identifierName, actionUrl) {
+            var selectedKeys = selected();
+            var data = {};
+
+            if (!selectAllQueryChecked()) {
+                if (selectedKeys.length < 1)
+                    return false;
+            } else {
+                selectedKeys = [];
+            }
+            //if(!selectedKeys|| selectedKeys.length<1)
+            data.query = exportQueryUri();
+            if (window.groupActionExtensions && groupActionExtensions[identifierName + 'Confirm']) {
+                groupActionExtensions[identifierName + 'Confirm'](selectedKeys, (selectAllQueryChecked() ? 'All ' : '') + selectedCount(), actionUrl,data, function () { selected([]) });
+            } else if (window.groupActionExtensions && groupActionExtensions[identifierName]) {
+                groupActionExtensions[identifierName](selectedKeys, (selectAllQueryChecked() ? 'All ' : '') + selectedCount(), actionUrl, data, function () { selected([]) });
+            } else {
+                window.location = actionUrl + '?' + $.param(data);
+            }
+        };
+        </text>
+            var groupActions = (IEnumerable<OData.Models.ActionModel>)Model.GroupActions;
+            foreach (var action in groupActions)
+            {
+                var identifierName = (action.Action ?? action.Text).Pascalize();
+             <text>
+        self['@identifierName'] = function () { buildGroupAction('@identifierName', '@Url.Action(action.Action)'); };
+        </text>
+
+        }
+        }
+    };
+    </script>

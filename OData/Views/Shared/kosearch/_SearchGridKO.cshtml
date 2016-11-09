@@ -1,0 +1,137 @@
+﻿@using System
+@using OData.Models
+@model SearchModel
+@{
+    var nav = "~/Views/Shared/kosearch/_SearchGridNavKO.cshtml"; //MVC.Shared.Views.kosearch._SearchGridNavKO;
+
+    if (Model.RowTemplateName == null)
+    {
+        Model.RowTemplateName = "None";
+    }
+}
+@helper RenderActionUrl(ActionModel action)
+{
+    if (action.Action != null)
+    {
+        @Url.Action(action.Action, action.Controller)
+    }
+    else if (action.Url != null)
+    {
+        @Url.Content(action.Url)
+    }
+    else
+    {
+        <text>#</text>
+    }
+}
+<div class="searchgrid t-grid t-widget" data-src="@Model.DataSourceUrl" data-tmpl="@Model.RowTemplateName">
+    @if (Model.GroupActions.Count > 0 || Model.ItemsPerPage.Count > 0 || Model.SortableItems.Count > 0)
+    {
+        <div class="grid-toolbar t-toolbar t-grid-toolbar" data-bind="visible:initialized() && resultModel() && resultModel().displayCount>0">
+            <div class="left">
+                @if (Model.GroupActions != null && Model.GroupActions.Count > 0)
+                {
+                    <div class="checkdropdown button" data-role="select">
+                        <span class="check-all-container">
+                            <input name="SelectAll" class="checkbox select-all" type="checkbox" title="Select All" data-bind="click:selectAllQuery,checked: selectAllQueryChecked" />
+                        </span>
+                        <div class="checkmenucontainer">
+                            <ul class="checkboxselectmenu">
+                                <li data-bind="click:selectAllQuery"><span>All</span></li>
+                                <li data-bind="click:selectAll"><span>Page</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span data-bind="text:'('+selectedCount() + ' selected)',visible:selectedCount()>0"></span>
+                    foreach (var action in Model.GroupActions)
+                    {
+                        <a data-bind="click:@(action.Action ?? action.Text),clickBubble:false,attr:{title:'@(action.Text ?? action.Name??action.Action)    '+selectedCount()}"  id="@(string.IsNullOrWhiteSpace(action.Id) ? Guid.NewGuid().ToString() : action.Id)" class="group-action t-button @action.CssClass" data-href="@RenderActionUrl(action)" href="#" title="@action.Text" rel="@action.Name">
+                            <span>@(action.Text ?? action.Name ?? action.Action)</span> </a>
+                    }
+                    <a data-bind="visible:selectedCount()>0 && !selectAllQueryChecked(),click:clearSelected,clickBubble:false,attr:{title:'unselect '+ (selectedCount()>2? 'all ' : '')+ selectedCount()}"  class="group-action t-button" href="#" rel="clearselected">
+                        <span>Clear Selected</span> </a>
+                }
+            </div>
+            <div class="right">
+                @if (Model.ItemsPerPage != null && Model.ItemsPerPage.Count > 0)
+                {
+                    <label>
+                        Items Per Page:
+                    </label>
+                    <select name="PageSize" class="page-size" data-bind="value:pagesize">
+                        @foreach (var item in Model.ItemsPerPage)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                }
+                @if (Model.SortableItems != null && Model.SortableItems.Count > 0)
+                {
+                    <label style="margin-left: 20px;">
+                        Sort by:
+                    </label>
+                    <select name="SortField" class="sort-by" data-bind="value:sortField">
+                        @foreach (var item in Model.SortableItems)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                    <span id="sort" data-bind="css:{sortascending:!$root.descending(),sortdescending: $root.descending}" class="sortascending">
+                        <a data-bind="click:$root.toggleSort" class="sort-button active"><span data-bind="text:$root.sortText">A-Z</span></a> 
+                    </span>
+                }
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+    }
+    @{ Html.RenderPartial(nav); }
+    <div class="grid-message" style="display: none;" data-bind="visible:status()">
+        <span data-bind="html:status">Page loading...</span>
+    </div>
+    <table class="grid-data" style="display: none;" data-bind="visible:!loading() && resultModel.safe().displayCount>0">
+        @if (Model.Columns != null && Model.Columns.Count > 0)
+        {
+            <thead>
+                <tr>
+                    @foreach (var column in Model.Columns)
+                    {
+                        <th class="@column.CssClass">
+                            @if (column.Sortable)
+                            {
+                                <a rel="@(column.PropertyName ?? column.Name)" class="sort-field" data-sortfield="@(column.SortField ?? column.PropertyName ?? column.Name)">@column.Name</a>
+                            }
+                            else
+                            {
+                                <span>@column.Name</span>
+                            }
+                        </th>
+                    }
+                </tr>
+            </thead>
+        }
+        <tbody data-bind="foreach: resultModel.safe().matches" data-template="@Model.RowTemplateName">
+            @if (Model.RowTemplateName == "None")
+            {
+                @ViewBag.RowTemplate
+            }
+            else
+            {
+                <!-- @(Model.RowTemplateName) -->
+                
+            }
+        </tbody>
+    </table>
+    @{ Html.RenderPartial(nav); }
+</div>
+@if (Model.ItemsPerPage.Count == 0)
+{
+    <input name="PageSize" type="hidden" value="@Model.PageSize" />
+}
+
+@if (!string.IsNullOrEmpty(Model.ConfirmTemplateName))
+{
+    <script id="ConfirmTemplate" type="text/x-jquery-tmpl">
+        @*@Html.Raw(TemplateStore.Current.GetSecuredScript(Model.ConfirmTemplateName))*@
+    </script>
+}

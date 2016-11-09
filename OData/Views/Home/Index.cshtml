@@ -39,10 +39,11 @@
 <a href="/Home/KoSearch">KoSearch version</a>
 @section scripts
 {
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
-    <script src="~/Scripts/koGrid-2.1.1.debug.js"></script>
-    <script src="~/Scripts/KoExtensions.js"></script>
+    @*<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script src="~/Scripts/ko/knockout-3.4.0.js"></script>
+    <script src="~/Scripts/ko/koGrid-2.1.1.debug.js"></script>
+    <script src="~/Scripts/ko/KoExtensions.js"></script>
     <script id="odataoverrides">
         window.filterOverride = {};
         window.filterOverride.HtmlMap = function(self,filters,buildFilter) {
