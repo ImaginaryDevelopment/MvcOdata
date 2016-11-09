@@ -1,0 +1,21 @@
+﻿@using OData.Models
+@using OData.Controllers.OData
+@model UniverseSearchModel
+@{
+    ViewBag.Title = "KoSearchView";
+    ViewBag.SearchTitle = "KoSearchView";
+    var propertyOfFunc = UniversesController.PropertyNameHelper;
+    const string odata = UniversesController.OdataSegment;
+    var koGridModel = new KoGridModel
+                        {
+                            SearchModel = Model,
+                            PrimaryKey = propertyOfFunc(a => a.UniverseID),
+                            OdataSegment = odata,
+                            ModelType = UniversesController.ModelType,
+                            FilterMetadata = ViewData.ModelMetadata.GetFormGroups(new ViewDataDictionary(Model.SearchForm)).SelectMany(a => a.Select(b => b)).OrderBy(a => a.PropertyName).ToArray()
+                        };
+    
+}
+
+<h2>KoSearchView</h2>
+

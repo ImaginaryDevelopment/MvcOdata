@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OData.Models;
 
 namespace OData.Controllers
 {
@@ -14,6 +15,11 @@ namespace OData.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult KoSearch()
+        {
+            return View(new UniverseSearchModel());
         }
 
     }

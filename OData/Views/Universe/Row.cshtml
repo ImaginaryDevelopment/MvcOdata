@@ -1,0 +1,31 @@
+﻿@model Contracts.Universe
+@using Contracts
+@using OData.Models
+@{ 
+    var prop = OData.Controllers.OData.UniversesController.PropertyNameHelper;
+    // nameof isn't working here
+    //var checkboxBind = "value: " + nameof(Universe.UniverseID) + ", checked: selected, enable: !$root.selectAllQueryChecked()";
+    //var trBind = "attr: { 'data-id': " + nameof(Universe.UniverseID) + "}, css: { alt: $index() % 2}";
+
+    var checkboxBind = "value: " + prop(a => a.UniverseID) + ", checked: selected, enable: !$root.selectAllQueryChecked()";
+    var trBind = "attr: { 'data-id': " + prop(a=> a.UniverseID) + "}, css: { alt: $index() % 2}";
+    var href = Url.Action("edit", new { Id = -1 }) + "'.replace('-1'," + @prop(a => a.UniverseID) + ")";
+    var ahrefbind = "text: " + prop(a => a.ShortName) + ", attr: { href: '" + href + "}";
+}
+<tr data-id="@prop(a=>a.UniverseID)" data-bind="@trBind" class="two-column">
+    <td class="first row-checkbox">
+        <input type="checkbox" data-bind="@checkboxBind" name="@prop(a=>a.UniverseID)s" />
+    </td>
+    <td class="second">
+        <ul>
+            <li class="row-item">
+                @Html.LabelFor(b=> b.ShortName, new { @class="row-label"})
+                <a href="#" data-bind="@ahrefbind">{DetailsLink}</a>
+            </li>
+            <li class="row-item">
+                @Html.LabelFor(b=>b.LongName, new { @class = "row-label" })
+                <span class="row-value" @Html.KoDataBind("text:" + prop(p => p.ShortName))></span>
+            </li>
+        </ul>
+    </td>
+</tr>
